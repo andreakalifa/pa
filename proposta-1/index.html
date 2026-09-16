@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premium Academy · Proposta 1 · Bordo vasca</title>
+<meta name="description" content="Collegiali di nuoto in tutta Italia con atleti olimpionici. Scegli la tappa, prenota la fascia della tua categoria.">
+<link rel="icon" href="../assets/img/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/core.css">
+<style>
+:root{
+  --ink:#242021; --ink2:#2e292a; --ink3:#3a3435; --red:#d70e20; --white:#fff; --fog:#b9b2b3;
+  --pa-bg:#242021; --pa-surface:#2e292a; --pa-fg:#fff; --pa-muted:#b9b2b3; --pa-line:#433d3e;
+  --pa-radius:4px; --pa-btn-radius:2px; --pa-map-land:#3a3435; --pa-map-dot:#4a4344;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--white);font:400 17px/1.55 'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%}
+a{color:inherit}
+.wrap{width:min(1280px,100% - 40px);margin-inline:auto}
+.x{font-style:italic;font-weight:900;font-stretch:112%;letter-spacing:-.01em;line-height:.92;text-transform:uppercase}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s}
+.nav.is-solid{background:rgba(36,32,33,.94);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--pa-line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:34px}
+.nav-logo span{font-style:italic;font-weight:900;font-stretch:115%;font-size:15px;line-height:.95;text-transform:uppercase}
+.nav-links{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav-links a{text-decoration:none;font-weight:600;font-size:15px;color:var(--fog)}
+.nav-links a:hover{color:#fff}
+.nav-r{display:flex;gap:10px;align-items:center}
+.burger{display:none;background:none;border:0;color:#fff;width:44px;height:44px;cursor:pointer}
+.burger i{display:block;width:24px;height:2px;background:#fff;margin:5px auto;transition:.3s}
+@media (max-width:980px){
+  .nav-links{position:fixed;inset:76px 0 auto;flex-direction:column;background:var(--ink);padding:24px 20px 32px;gap:18px;transform:translateY(-120%);visibility:hidden;transition:.35s;border-bottom:3px solid var(--red)}
+  .nav-links a{font-size:22px;color:#fff;font-style:italic;font-weight:800}
+  .nav.is-open .nav-links{transform:none;visibility:visible}
+  .burger{display:block}
+  .nav-r .pa-btn.is-ghost{display:none}
+}
+
+/* hero */
+.hero{position:relative;min-height:100svh;padding:120px 0 0;overflow:hidden;isolation:isolate}
+.hero::before{content:'';position:absolute;inset:0;z-index:-2;background:
+  linear-gradient(115deg,transparent 0 62%,rgba(215,14,32,.9) 62% 62.3%,transparent 62.3% 70%,rgba(215,14,32,.5) 70% 70.15%,transparent 70.15%),
+  linear-gradient(115deg,transparent 0 8%,rgba(215,14,32,.35) 8% 8.15%,transparent 8.15%)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:end;gap:20px;min-height:calc(100svh - 120px)}
+.hero-copy{padding-bottom:150px;position:relative;z-index:2}
+.hero-kicker{display:flex;gap:14px;align-items:center;font-weight:600;color:var(--fog);margin-bottom:24px;font-size:15px}
+.hero-kicker b{color:#fff}
+.hero h1{font-size:clamp(56px,9.4vw,152px);margin:0}
+.hero h1 span{display:block}
+.hero h1 .out{color:transparent;-webkit-text-stroke:2px #fff}
+.tags{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:34px 0 36px}
+.tag{background:var(--red);padding:6px 26px 6px 18px;clip-path:polygon(0 0,100% 0,calc(100% - 16px) 100%,0 100%);font-style:italic;font-weight:900;font-size:clamp(20px,2.3vw,30px);line-height:1.15;transform-origin:left;animation:tagIn .6s cubic-bezier(.2,.8,.2,1) backwards}
+.tag:nth-child(2){animation-delay:.08s}.tag:nth-child(3){animation-delay:.16s}.tag:nth-child(4){animation-delay:.24s}
+@keyframes tagIn{from{transform:translateX(-40px);opacity:0}}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero-cta .pa-btn{font-size:17px;padding:18px 28px}
+.hero-photo{position:relative;align-self:end;height:100%;display:flex;align-items:flex-end;justify-content:center}
+.hero-photo img{width:min(640px,100%);display:block;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.hero-photo .ph-note{position:absolute;right:0;top:18%;color:var(--fog);font-size:13px;writing-mode:vertical-rl;letter-spacing:.08em}
+
+/* next event triangle band — dal volantino */
+.next{position:relative;margin-top:-96px;z-index:5}
+.next-card{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:var(--ink2);border:2px solid var(--red);padding:30px 36px;clip-path:polygon(2% 0,100% 0,98% 100%,0 100%);gap:24px}
+.next-side .x{font-size:clamp(28px,3.4vw,46px)}
+.next-side small{display:block;color:var(--fog);font-size:14px;margin-top:8px}
+.next-tri{width:260px;aspect-ratio:1.15;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%);display:grid;justify-items:center;align-content:start;padding-top:22px;text-align:center;border-top:0;position:relative}
+.next-tri::before{content:'';position:absolute;inset:0;background:var(--red);clip-path:polygon(0 0,100% 0,50% 100%,50% calc(100% - 6px),calc(100% - 7px) 3px,7px 3px,50% calc(100% - 6px),50% 100%)}
+.next-tri .x{color:var(--red);font-size:30px}
+.next-tri .date{font-weight:900;font-style:italic;font-size:22px;line-height:1.1}
+.cd{display:flex;gap:6px;margin-top:10px;font-variant-numeric:tabular-nums}
+.cd span{display:grid;font-size:10px;color:var(--fog);min-width:34px}
+.cd b{font-size:22px;font-style:italic;font-weight:900;color:#fff}
+.next-right{text-align:right}
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-photo{order:-1;height:auto;margin:-10px -20px 0;max-height:52svh;overflow:hidden}
+  .hero-copy{padding-bottom:120px}
+  .next-card{grid-template-columns:1fr;clip-path:none;text-align:center}
+  .next-right{text-align:center}
+  .next-tri{margin:auto}
+  .hero-photo .ph-note{display:none}
+  .hero-kicker{display:block}
+}
+
+/* sezioni */
+section.s{padding:clamp(80px,11vw,150px) 0}
+.s-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:48px;flex-wrap:wrap}
+.s-head h2{font-size:clamp(44px,7vw,104px);margin:0}
+.s-head p{max-width:42ch;color:var(--fog);margin:0}
+
+/* tappe */
+.tour{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.filters select,.filters input{background:var(--ink2);color:#fff;border:1px solid var(--pa-line);padding:12px 14px;font:500 15px 'Archivo';border-radius:2px;min-width:0}
+.filters input{flex:1 1 180px}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--fog)}
+.chk input{accent-color:var(--red);width:18px;height:18px}
+.stops{list-style:none;margin:0;padding:0;border-top:1px solid var(--pa-line);counter-reset:stop}
+.stop{display:grid;grid-template-columns:70px 150px 1fr auto;gap:22px;align-items:center;padding:24px 8px;border-bottom:1px solid var(--pa-line);cursor:pointer;position:relative;transition:background .2s;counter-increment:stop}
+.stop::before{content:counter(stop,decimal-leading-zero);font-style:italic;font-weight:900;font-size:22px;color:var(--pa-line);transition:color .2s}
+.stop:hover,.stop.is-active{background:var(--ink2)}
+.stop:hover::before,.stop.is-active::before{color:var(--red)}
+.stop-date{font-style:italic;font-weight:900;font-size:28px;line-height:1;text-transform:uppercase}
+.stop-date small{display:block;font-size:13px;font-style:normal;font-weight:600;color:var(--fog);margin-top:6px}
+.stop-city{font-style:italic;font-weight:900;font-stretch:115%;font-size:clamp(28px,3.6vw,44px);line-height:1;text-transform:uppercase}
+.stop-venue{color:var(--fog);font-size:14px;margin-top:6px}
+.stop-r{display:grid;justify-items:end;gap:10px}
+.stop-r .from{font-size:13px;color:var(--fog)}
+.stop-r .from b{color:#fff;font-size:18px}
+.empty{padding:40px 0;color:var(--fog)}
+.mapbox{position:sticky;top:100px;background:var(--ink2);padding:24px;border-top:4px solid var(--red)}
+.mapbox h3{margin:0 0 4px;font-style:italic;font-weight:900;font-size:22px}
+.mapbox p{margin:0 0 10px;color:var(--fog);font-size:14px}
+.pa-pin-label{stroke:var(--ink2)}
+.pa-badge.is-open{color:#4ade80;background:rgba(74,222,128,.12)}.pa-badge.is-last{color:#ffb454;background:rgba(255,180,84,.14)}
+@media (max-width:1060px){.tour{grid-template-columns:1fr}.mapbox{position:static;order:-1;max-width:460px}}
+@media (max-width:700px){.stop{grid-template-columns:1fr auto;gap:8px 14px;padding:20px 4px}.stop::before{display:none}.stop-date{grid-column:1;font-size:18px}.stop-date small{display:inline;margin-left:8px}.stop-main{grid-column:1 / -1;grid-row:2}.stop-r{grid-column:2;grid-row:1}.stop-r .from{display:none}}
+
+/* sessioni */
+.sessions{background:var(--red);color:#fff;position:relative;overflow:hidden}
+.sessions .x.big{font-size:clamp(60px,12vw,200px);color:rgba(0,0,0,.14);position:absolute;right:-2vw;bottom:-3vw;white-space:nowrap;pointer-events:none}
+.sess-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid rgba(255,255,255,.4)}
+.sess{padding:28px 24px 0 0;border-right:2px solid rgba(255,255,255,.25);margin-right:24px}
+.sess:last-child{border:0}
+.sess h3{font-style:italic;font-weight:900;font-size:clamp(24px,2.6vw,34px);line-height:1;margin:0 0 12px}
+.sess p{margin:0;font-size:16px;max-width:30ch}
+.format{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;background:rgba(0,0,0,.2)}
+.format div{background:var(--red);padding:22px 0}
+.format b{display:block;font-style:italic;font-weight:900;font-size:clamp(40px,5vw,72px);line-height:1}
+.sessions .s-head p{color:rgba(255,255,255,.85)}
+@media (max-width:860px){.sess-grid{grid-template-columns:1fr 1fr;row-gap:30px}.sess{border:0}.format{grid-template-columns:1fr}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:st;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:st;position:relative;padding-top:78px}
+.steps li::before{content:counter(st);position:absolute;top:0;left:0;font-style:italic;font-weight:900;font-size:78px;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--red)}
+.steps h3{font-style:italic;font-weight:900;font-size:24px;margin:0 0 8px;text-transform:uppercase}
+.steps p{margin:0;color:var(--fog)}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* coach */
+.coaches{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.coach{cursor:pointer;background:none;border:0;padding:0;color:inherit;text-align:left;font:inherit}
+.coach .frame{position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,100% 88%,86% 100%,0 100%)}
+.coach .pa-avatar{border-radius:0;aspect-ratio:3/4;transition:transform .5s;filter:grayscale(.2)}
+.coach:hover .pa-avatar{transform:scale(1.04);filter:none}
+.coach .frame::after{content:'';position:absolute;left:0;bottom:0;height:6px;width:0;background:var(--red);transition:width .35s}
+.coach:hover .frame::after{width:100%}
+.coach h3{font-style:italic;font-weight:900;font-size:24px;line-height:1;margin:16px 0 6px;text-transform:uppercase}
+.coach p{margin:0;color:var(--fog);font-size:14px}
+.coach-cta{text-decoration:none}.coach-cta .frame{aspect-ratio:3/4;background:var(--red);display:flex;align-items:flex-end;padding:22px}.coach-cta .frame span{font-style:italic;font-weight:900;font-size:clamp(20px,2.2vw,30px);line-height:1.05}
+@media (max-width:980px){.coaches{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.coach h3{font-size:18px}}
+
+/* società */
+.club{display:grid;grid-template-columns:1.2fr 1fr;gap:0;background:#fff;color:var(--ink)}
+.club-l{padding:clamp(32px,6vw,72px)}
+.club-l h2{font-size:clamp(40px,5.6vw,80px);margin:0 0 18px}
+.club-l p{max-width:48ch;color:#4d4647}
+.club ul{list-style:none;padding:0;margin:26px 0 30px;display:grid;gap:12px}
+.club li{padding-left:30px;position:relative;font-weight:600}
+.club li::before{content:'';position:absolute;left:0;top:8px;width:16px;height:8px;background:var(--red);clip-path:polygon(0 0,100% 0,80% 100%,0 100%)}
+.club-r{background:var(--red) url(../assets/img/volantino.jpg) center/cover;min-height:340px;position:relative}
+.club-r::after{content:'Il volantino della prima edizione';position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;padding:10px 16px;font-size:13px}
+.club .pa-btn.is-ghost{color:var(--ink);border-color:#ccc}
+@media (max-width:860px){.club{grid-template-columns:1fr}}
+
+/* galleria */
+.gal{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:150px;gap:10px}
+.gal figure{margin:0;overflow:hidden;position:relative}
+.gal figure:nth-child(1){grid-column:span 3;grid-row:span 3}
+.gal figure:nth-child(2){grid-column:span 3;grid-row:span 2}
+.gal figure:nth-child(3),.gal figure:nth-child(4){grid-column:span 3;grid-row:span 2}
+.gal figure:nth-child(5){grid-column:span 3;grid-row:span 1}
+.gal figure img{width:100%;height:100%;object-fit:cover;object-position:top}
+.gal figcaption{position:absolute;left:0;bottom:0;background:var(--ink);padding:8px 12px;font-size:13px}
+@media (max-width:700px){.gal{grid-template-columns:1fr 1fr;grid-auto-rows:130px}.gal figure{grid-column:span 1!important;grid-row:span 1!important}.gal figure:nth-child(1){grid-column:span 2!important;grid-row:span 2!important}}
+
+/* testimonianze */
+.quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--pa-line)}
+.quote{background:var(--ink);padding:36px 32px 36px 0}
+.quote:nth-child(even){padding-left:32px}
+.quote blockquote{margin:0 0 20px;font-size:clamp(20px,2vw,26px);line-height:1.35;font-weight:500;font-stretch:95%}
+.quote cite{font-style:normal;color:var(--fog);font-size:14px}
+.quote cite b{color:#fff;display:block;font-size:16px}
+@media (max-width:760px){.quotes{grid-template-columns:1fr}.quote,.quote:nth-child(even){padding:28px 0}}
+
+/* blog */
+.posts{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.post{border-top:3px solid var(--red);padding-top:18px}
+.post span{font-size:13px;color:var(--fog)}
+.post h3{font-size:20px;line-height:1.2;margin:10px 0 12px;font-weight:700}
+.post a{text-decoration:none}
+.post a:hover h3{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:4px}
+@media (max-width:980px){.posts{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.posts{grid-template-columns:1fr}}
+
+/* sponsor */
+.spons{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding:40px 0;border-block:1px solid var(--pa-line)}
+.spons span{font-style:italic;font-weight:900;font-stretch:120%;font-size:22px;color:#6f6768;text-transform:uppercase}
+
+/* faq + newsletter */
+.faqwrap{display:grid;grid-template-columns:1fr 1.4fr;gap:60px}
+.faqwrap h2{font-size:clamp(44px,6vw,90px);margin:0}
+.faqwrap .pa-faq-q{font-size:19px}
+@media (max-width:860px){.faqwrap{grid-template-columns:1fr;gap:20px}}
+.news{background:var(--ink2);padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;clip-path:polygon(0 0,100% 0,100% 100%,3% 100%)}
+.news h2{font-size:clamp(34px,4vw,56px);margin:0}
+.news form{display:flex;gap:10px;flex-wrap:wrap}
+.news input{flex:1 1 220px;background:var(--ink);border:1px solid var(--pa-line);color:#fff;padding:16px;font:500 16px 'Archivo'}
+@media (max-width:760px){.news{grid-template-columns:1fr;clip-path:none}}
+
+footer{padding:70px 0 40px;color:var(--fog);font-size:14px}
+.foot{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px}
+.foot img{width:150px}
+.foot h4{color:#fff;margin:0 0 12px;font-size:15px}
+.foot ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.foot a{text-decoration:none}.foot a:hover{color:#fff}
+.legal{margin-top:50px;padding-top:20px;border-top:1px solid var(--pa-line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}}
+.wa{position:fixed;right:18px;bottom:18px;z-index:40;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.wa svg{width:30px;fill:#fff}
+.back{position:fixed;left:18px;bottom:18px;z-index:40;background:#fff;color:var(--ink);padding:10px 14px;font-size:13px;font-weight:700;text-decoration:none;border-radius:2px}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="nav-logo" href="#top" aria-label="Premium Academy, torna su"><img src="../assets/img/mark.png" alt=""><span>Premium<br>Academy</span></a>
+    <ul class="nav-links" id="links">
+      <li><a href="#tappe">Tappe</a></li><li><a href="#format">Format</a></li><li><a href="#coach">Coach</a></li><li><a href="#societa">Società</a></li><li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-r">
+      <button class="pa-btn is-ghost is-sm" data-pa="account">Area riservata</button>
+      <button class="pa-btn is-sm" data-pa="register">Iscriviti</button>
+      <button class="burger" id="burger" aria-label="Apri menu" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="hero-kicker"><b>Tour 2026/27</b> 9 tappe in Italia con atleti della nazionale</div>
+        <h1 class="x"><span>Un weekend</span><span class="out">per nuotare</span><span>meglio.</span></h1>
+        <div class="tags"><span class="tag">Tecnica di nuotata</span><span class="tag">Virate</span><span class="tag">Partenze</span><span class="tag">5° Stile</span></div>
+        <div class="hero-cta"><a class="pa-btn" href="#tappe">Trova la tua tappa</a><button class="pa-btn is-ghost" data-pa="event" data-id="roma-2026" data-tab="coach">Conosci i coach</button></div>
+      </div>
+      <div class="hero-photo"><img src="../assets/img/coaches-duo.jpg" alt="Alessandro Calvi e Marco Orsi a bordo vasca"><span class="ph-note">Foto da volantino, sostituire con scatto HD</span></div>
+    </div>
+  </section>
+
+  <div class="wrap next" id="next"></div>
+
+  <section class="s" id="tappe">
+    <div class="wrap">
+      <div class="s-head"><h2 class="x">Le tappe</h2><p>Ogni tappa è un weekend. Ogni fascia oraria è una categoria, con posti contati per lavorare davvero sul singolo atleta.</p></div>
+      <div class="tour">
+        <div>
+          <div class="filters" role="search">
+            <input type="search" id="fq" placeholder="Cerca città o piscina" aria-label="Cerca città o piscina">
+            <select id="fr" aria-label="Regione"><option value="">Tutte le regioni</option></select>
+            <select id="fm" aria-label="Mese"><option value="">Tutti i mesi</option></select>
+            <select id="fc" aria-label="Categoria"><option value="">Tutte le categorie</option></select>
+            <label class="chk"><input type="checkbox" id="fo"> Solo con posti</label>
+          </div>
+          <ol class="stops" id="stops"></ol>
+        </div>
+        <aside class="mapbox"><h3>Dove andiamo</h3><p>Tocca una città per aprire il programma.</p><div id="map"></div></aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="s sessions" id="format">
+    <div class="wrap">
+      <div class="s-head"><h2 class="x">Il format</h2><p>Sessione a secco con esercizi mirati, poi in acqua per applicare subito quello che hai imparato.</p></div>
+      <div class="sess-grid" id="sess"></div>
+      <div class="format">
+        <div><b>20′</b>attivazione a secco</div>
+        <div><b>60′</b>tecnica in acqua</div>
+        <div><b>10′</b>video feedback a bordo vasca</div>
+      </div>
+    </div>
+    <span class="x big" aria-hidden="true">Premium Academy</span>
+  </section>
+
+  <section class="s">
+    <div class="wrap">
+      <div class="s-head"><h2 class="x">Come funziona</h2></div>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </section>
+
+  <section class="s" id="coach" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head"><h2 class="x">In vasca con</h2><p>Due head coach sempre presenti e ospiti diversi a ogni tappa: olimpionici, finalisti, preparatori federali.</p></div>
+      <div class="coaches" id="coaches"></div>
+    </div>
+  </section>
+
+  <section class="s" id="societa" style="padding-top:0">
+    <div class="wrap club">
+      <div class="club-l">
+        <h2 class="x">Porta la tua squadra</h2>
+        <p>Per gli allenatori: iscrivi più atleti in un’unica pratica, con codice sconto dedicato e un posto nella Clinic della domenica per lo staff tecnico.</p>
+        <ul><li>Iscrizione multipla da un solo form</li><li>−10% da 8 atleti con codice società</li><li>Report tecnico per ogni atleta dopo l’evento</li><li>Clinic allenatori inclusa per 1 tecnico</li></ul>
+        <div class="hero-cta"><button class="pa-btn" data-pa="register">Iscrivi la società</button><a class="pa-btn is-ghost" href="mailto:info@premiumacademy.it">Scrivici</a></div>
+      </div>
+      <div class="club-r" role="img" aria-label="Volantino Premium Academy"></div>
+    </div>
+  </section>
+
+  <section class="s" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head"><h2 class="x">Già in vasca</h2><p>Pescara e Verona, le ultime due tappe. I partecipanti trovano foto e video nell’area riservata.</p></div>
+      <div class="gal" id="gal"></div>
+    </div>
+  </section>
+
+  <section class="s" style="padding-top:0">
+    <div class="wrap"><div class="quotes" id="quotes"></div></div>
+  </section>
+
+  <section class="s" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head"><h2 class="x">Dal bordo vasca</h2><p>Consigli tecnici scritti dai coach, da leggere tra una tappa e l’altra.</p></div>
+      <div class="posts" id="posts"></div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="spons" id="spons" aria-label="Partner (placeholder)"></div></div>
+
+  <section class="s" id="faq">
+    <div class="wrap faqwrap"><h2 class="x">Domande</h2><div id="faqlist"></div></div>
+  </section>
+
+  <div class="wrap">
+    <div class="news">
+      <h2 class="x">Non perdere l’apertura delle iscrizioni</h2>
+      <form data-newsletter><input type="email" placeholder="La tua email" aria-label="Email"><button class="pa-btn">Avvisami</button></form>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><img src="../assets/img/logo-light.png" alt="Premium Academy"></div>
+      <div><h4>Eventi</h4><ul><li><a href="#tappe">Calendario</a></li><li><a href="#format">Format</a></li><li><a href="#" data-pa="account">Area riservata</a></li></ul></div>
+      <div><h4>Info e adesioni</h4><ul><li>Alessandro: 333 744 2984</li><li><a href="mailto:info@premiumacademy.it">info@premiumacademy.it</a></li></ul></div>
+      <div><h4>Social</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Premium Academy · P.IVA 00000000000</span><span>Privacy · Cookie · Regolamento</span></div>
+  </div>
+</footer>
+<a class="back" href="../index.html">← Tutte le proposte</a>
+<a class="wa" href="https://wa.me/393337442984" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4.9 2.9.8 3.4.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg></a>
+
+<script>window.PA_BASE='../'</script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/core.js"></script>
+<script>
+(function(){
+  const {D,$,$$,esc,fmt,eur,cat,coach,eventInfo,filter,countdown,pad,italyMap,bindMap,avatar,photo,faqHtml,bindFaq}=PA;
+  // nav
+  const nav=$('#nav'); addEventListener('scroll',()=>nav.classList.toggle('is-solid',scrollY>40),{passive:true});
+  $('#burger').onclick=()=>{const o=nav.classList.toggle('is-open');$('#burger').setAttribute('aria-expanded',o)};
+  $$('#links a').forEach(a=>a.onclick=()=>nav.classList.remove('is-open'));
+
+  // prossima tappa
+  const n=PA.nextOpen(), ni=eventInfo(n);
+  $('#next').innerHTML=`<div class="next-card">
+    <div class="next-side"><div class="x">${esc(n.city)}</div><small>${esc(n.venue)}</small></div>
+    <div class="next-tri"><div class="x">${fmt.weekday(n.start)}</div><div class="date">${fmt.short(n.start).toUpperCase()}</div><div class="cd" id="cd"></div></div>
+    <div class="next-side next-right"><div class="x">${ni.left} posti</div><small>${ni.label} · da ${eur(ni.priceFrom)}</small><div style="margin-top:14px"><button class="pa-btn" data-pa="event" data-id="${n.id}">Apri il programma</button></div></div></div>`;
+  countdown(n.startDate,v=>$('#cd').innerHTML=`<span><b>${v.days}</b>gg</span><span><b>${pad(v.hours)}</b>ore</span><span><b>${pad(v.minutes)}</b>min</span><span><b>${pad(v.seconds)}</b>sec</span>`);
+
+  // filtri
+  PA.regions().forEach(r=>$('#fr').insertAdjacentHTML('beforeend',`<option>${esc(r)}</option>`));
+  PA.months().forEach(m=>$('#fm').insertAdjacentHTML('beforeend',`<option value="${m.key}">${m.label}</option>`));
+  D.categories.forEach(c=>$('#fc').insertAdjacentHTML('beforeend',`<option value="${c.id}">${esc(c.label)}</option>`));
+  $('#map').innerHTML=italyMap({style:'line'}); bindMap($('#map'));
+  function draw(){
+    const list=filter({q:$('#fq').value,region:$('#fr').value,month:$('#fm').value,category:$('#fc').value,onlyOpen:$('#fo').checked});
+    $('#stops').innerHTML=list.length?list.map(e=>{const i=eventInfo(e);return `<li class="stop" data-id="${e.id}" tabindex="0">
+      <div class="stop-date">${fmt.rangeShort(e)}<small>${e.startDate.getFullYear()}</small></div>
+      <div class="stop-main"><div class="stop-city">${esc(e.city)}</div><div class="stop-venue">${esc(e.venue)} · ${esc(e.pool)}</div></div>
+      <div class="stop-r"><span class="pa-badge is-${i.status}">${esc(i.label)}</span><span class="from">da <b>${eur(i.priceFrom)}</b></span></div></li>`}).join(''):`<li class="empty">Nessuna tappa con questi filtri. <button class="pa-link" id="reset">Azzera i filtri</button></li>`;
+    $$('.stop').forEach(li=>{const go=()=>PA.openEvent(li.dataset.id);li.onclick=go;li.onkeydown=e=>{if(e.key==='Enter')go()};
+      li.onmouseenter=()=>{$$('.pa-pin').forEach(p=>p.classList.toggle('is-active',p.dataset.event===li.dataset.id))}});
+    $$('.pa-pin').forEach(p=>p.style.opacity=list.some(e=>e.id===p.dataset.event)?1:.25);
+    const r=$('#reset'); if(r) r.onclick=()=>{['#fq','#fr','#fm','#fc'].forEach(s=>$(s).value='');$('#fo').checked=false;draw()};
+  }
+  ['#fq','#fr','#fm','#fc','#fo'].forEach(s=>$(s).addEventListener('input',draw)); draw();
+
+  $('#sess').innerHTML=D.sessions.map(s=>`<div class="sess"><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join('');
+  $('#steps').innerHTML=D.steps.map(([t,p])=>`<li><h3>${esc(t)}</h3><p>${esc(p)}</p></li>`).join('');
+  const cs=D.coaches;
+  $('#coaches').innerHTML=cs.map(cardC).join('')+`<a class="coach coach-cta" href="mailto:info@premiumacademy.it"><div class="frame"><span>Sei un atleta azzurro e vuoi allenare con noi?</span></div><h3>Diventa guest coach</h3><p>Scrivici e raccontaci la tua specialità</p></a>`;
+  function cardC(c){const ev=D.events.find(e=>e.coaches.includes(c.id)&&eventInfo(e).status!=='past');return `<button class="coach" data-pa="event" data-id="${ev?ev.id:'roma-2026'}" data-tab="coach"><div class="frame">${avatar(c)}</div><h3>${esc(c.name)}</h3><p>${esc(c.focus)}</p></button>`}
+  $('#gal').innerHTML=`<figure><img src="../assets/img/coaches-duo.jpg" alt="Coach a bordo vasca"><figcaption>Pescara · settembre 2026</figcaption></figure>`+[1,2,3,4].map(i=>`<figure>${photo(i*41,'',i%3)}<figcaption>${['Sessione a secco','Virate, fascia Juniores','Video analisi','Verona · maggio 2026'][i-1]}</figcaption></figure>`).join('');
+  $('#quotes').innerHTML=D.testimonials.map(t=>`<figure class="quote"><blockquote>${esc(t.text)}</blockquote><cite><b>${esc(t.name)}</b>${esc(t.who)} · ${esc(t.city)}</cite></figure>`).join('');
+  $('#posts').innerHTML=D.articles.map(a=>`<article class="post"><a href="#" onclick="PA.toast('Demo: articolo del blog');return false"><span>${esc(a.tag)} · ${a.min} min</span><h3>${esc(a.title)}</h3><span>di ${esc(coach(a.coach).name)}</span></a></article>`).join('');
+  $('#spons').innerHTML=D.sponsors.map(s=>`<span>${esc(s)}</span>`).join('');
+  $('#faqlist').innerHTML=faqHtml(); bindFaq($('#faqlist'));
+})();
+</script>
+</body>
+</html>

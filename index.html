@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premium Academy · Proposte sito</title>
+<link rel="icon" href="assets/img/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,700..900&display=swap" rel="stylesheet">
+<style>
+:root{--g:#242021;--g2:#2e292a;--red:#d70e20;--fog:#b9b2b3;--line:#433d3e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--g);color:#fff;font:400 17px/1.55 'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{width:min(1240px,100% - 40px);margin:auto}
+header{padding:56px 0 40px;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:end;border-bottom:1px solid var(--line)}
+header img{width:180px;display:block}
+header h1{font:900 italic clamp(40px,6vw,86px)/.92 'Archivo';font-stretch:112%;text-transform:uppercase;margin:0 0 16px}
+header p{margin:0;color:var(--fog);max-width:62ch}
+@media (max-width:760px){header{grid-template-columns:1fr;gap:20px}header img{width:130px}}
+.list{display:grid;gap:22px;padding:40px 0}
+.p{display:grid;grid-template-columns:1.1fr 1fr;gap:0;background:var(--g2);border:1px solid var(--line);overflow:hidden}
+.prev{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000;border-right:1px solid var(--line)}
+.prev iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none}
+.prev a{position:absolute;inset:0;z-index:2}
+.info{padding:30px;display:flex;flex-direction:column}
+.info .n{font:900 italic 15px 'Archivo';color:var(--red);text-transform:uppercase;letter-spacing:.02em}
+.info h2{font:900 italic clamp(30px,3.4vw,46px)/1 'Archivo';font-stretch:110%;text-transform:uppercase;margin:6px 0 12px}
+.info p{margin:0 0 16px;color:#d7d1d2}
+.info ul{margin:0 0 22px;padding-left:18px;color:var(--fog);font-size:15px}
+.info .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.info .tags span{font-size:13px;border:1px solid var(--line);padding:4px 10px}
+.btns{display:flex;gap:10px;margin-top:auto;flex-wrap:wrap}
+.btn{background:var(--red);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border:1px solid var(--red)}
+.btn:hover{background:#a50a18}
+.btn.g{background:none;border-color:var(--line)}
+.btn.g:hover{border-color:#fff}
+@media (max-width:900px){.p{grid-template-columns:1fr}.prev{border-right:0;border-bottom:1px solid var(--line)}}
+.extra{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 0 40px}
+.box{background:#fff;color:var(--g);padding:30px}
+.box.dark{background:var(--g2);color:#fff;border:1px solid var(--line)}
+.box h3{font:900 italic 28px 'Archivo';text-transform:uppercase;margin:0 0 12px}
+.box ul{padding-left:18px;margin:0;font-size:15px;line-height:1.8}
+@media (max-width:900px){.extra{grid-template-columns:1fr}}
+footer{padding:30px 0 50px;color:var(--fog);font-size:14px;border-top:1px solid var(--line)}
+code{background:rgba(255,255,255,.08);padding:1px 6px}
+.box code{background:#f1eeee}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/img/logo-light.png" alt="Premium Academy">
+    <div><h1>Cinque direzioni per il sito</h1><p>Ogni proposta è un sito completo e navigabile, con gli stessi contenuti di esempio: tappe, fasce orarie per categoria, iscrizione con pagamento simulato e QR, area riservata. Cambia solo il modo di raccontarli.</p></div>
+  </header>
+
+  <div class="list" id="list"></div>
+
+  <div class="extra">
+    <div class="box">
+      <h3>In tutte le proposte</h3>
+      <ul>
+        <li>Calendario tappe con filtri per regione, mese e categoria</li>
+        <li>Mappa d’Italia interattiva e countdown alla prossima tappa</li>
+        <li>Scheda evento: programma per fasce, posti in tempo reale, coach, struttura, cosa portare, FAQ, condivisione</li>
+        <li>Iscrizione in 5 passi: fasce multiple con sconto pacchetto, genitore, atleta o società con più atleti, controllo età e categoria, consenso minori, certificato medico, codice sconto, pagamento, lista d’attesa</li>
+        <li>Conferma con QR, file calendario .ics e condivisione WhatsApp</li>
+        <li>Area riservata con pass, documenti, foto e video dell’evento</li>
+        <li>Coach, società sportive, galleria, testimonianze, consigli, partner, newsletter</li>
+      </ul>
+    </div>
+    <div class="box dark">
+      <h3>Pannello organizzatori</h3>
+      <p style="color:#d7d1d2;margin:0 0 14px">Uguale per tutte le proposte: panoramica incassi e riempimento, gestione fasce, creazione eventi, elenco iscritti con esportazione CSV, check-in tramite codice QR, invio comunicazioni.</p>
+      <a class="btn" href="admin/index.html">Apri il pannello demo</a>
+      <p style="color:var(--fog);font-size:14px;margin:20px 0 0">Codici sconto di prova: <code>SOCIETA10</code> e <code>PREMIUM20</code>. Le iscrizioni fatte nei siti restano salvate nel browser e compaiono in area riservata e nel pannello.</p>
+    </div>
+  </div>
+
+</div>
+<footer><div class="wrap">Premium Academy · prototipi statici, apri <code>index.html</code> nel browser</div></footer>
+
+<script>
+const P=[
+  {n:'Proposta 1',slug:'proposta-1',t:'Bordo vasca',d:'La traduzione più fedele del volantino: fondo grafite, tagli diagonali rossi, etichette corsive inclinate e il triangolo della data. Tono editoriale da brand sportivo.',f:['Hero con i quattro focus del volantino e foto dei coach','Banda della prossima tappa con triangolo e countdown','Elenco tappe numerato affiancato dalla mappa','Sezione format a tutto rosso'],tags:['Scuro','Editoriale','Archivo corsivo']},
+  {n:'Proposta 2',slug:'proposta-2',t:'Apnea',d:'Un’esperienza immersiva: linee d’acqua animate che si increspano al passaggio del mouse e un profondimetro laterale che segna quanto sei “sceso” nella pagina. Pannelli in vetro satinato.',f:['Superficie d’acqua interattiva su canvas','Tappe come corsie da scorrere in orizzontale','Carosello 3D dei coach','Mappa a punti luminosi'],tags:['Scuro','Animato','Unbounded']},
+  {n:'Proposta 3',slug:'proposta-3',t:'App',d:'Il sito come una web app: barra laterale su desktop, tab bar in basso su telefono, home a riquadri. Pensata per chi torna spesso a controllare posti e iscrizioni.',f:['Home a riquadri con pass QR in evidenza','Vista calendario mensile','Schede tappa con riempimento di ogni fascia','Sezione “Le mie iscrizioni”'],tags:['Chiaro','Mobile first','Bricolage Grotesque']},
+  {n:'Proposta 4',slug:'proposta-4',t:'Blocco',d:'Rosso pieno, bordi neri spessi, tipografia condensata enorme. Il programma della tappa diventa un tabellone di gara con ogni posto disegnato come una casella.',f:['Ticker delle tappe in testata','Tabellone orari con posti a caselle','Elenco tappe a righe che si invertono','Codice società in formato gigante'],tags:['Rosso','Brutalista','Anton']},
+  {n:'Proposta 5',slug:'proposta-5',t:'Punto',d:'Pulita e luminosa. A sinistra un pannello fisso con il punto rosso del logo che cambia dimensione e contenuto mentre scorri: countdown, città, minuti, codici.',f:['Pannello fisso che segue la lettura','Calendario raggruppato per mese','Metodo spiegato con barra dei tempi','Galleria a scorrimento'],tags:['Chiaro','Minimale','Hanken Grotesk']}
+];
+const list=document.getElementById('list');
+list.innerHTML=P.map(p=>`<article class="p">
+  <div class="prev"><iframe src="${p.slug}/index.html" title="Anteprima ${p.n}" loading="lazy" tabindex="-1" aria-hidden="true"></iframe><a href="${p.slug}/index.html" aria-label="Apri ${p.n}"></a></div>
+  <div class="info"><span class="n">${p.n}</span><h2>${p.t}</h2><p>${p.d}</p><ul>${p.f.map(x=>`<li>${x}</li>`).join('')}</ul><div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div>
+  <div class="btns"><a class="btn" href="${p.slug}/index.html">Apri la ${p.n.toLowerCase()}</a><a class="btn g" href="${p.slug}/index.html#evento=roma-2026">Vedi una tappa</a></div></div></article>`).join('');
+function fit(){document.querySelectorAll('.prev').forEach(b=>{b.querySelector('iframe').style.transform=`scale(${b.clientWidth/1440})`})}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+PREMIUM ACADEMY - PROPOSTE SITO
+
+Apri index.html nel browser (doppio clic). Da lì navighi tra le 5 proposte e il pannello organizzatori.
+Serve una connessione internet solo per caricare i font Google.
+
+Struttura
+  index.html            hub con tutte le proposte
+  proposta-1..5/        un sito per cartella (index.html)
+  admin/                pannello organizzatori (demo)
+  assets/js/data.js     TUTTI i contenuti: tappe, fasce, prezzi, coach, FAQ, testimonianze
+  assets/js/core.js     mappa, dettaglio evento, iscrizione, QR, area riservata
+  assets/css/core.css   stile dei componenti condivisi (ogni proposta lo adatta con variabili CSS)
+  assets/img/           logo scontornato (chiaro, scuro, solo marchio) e foto ritagliate dal volantino
+
+Da provare
+  - Iscrizione completa con più fasce (sconto pacchetto 15%)
+  - Codici sconto: SOCIETA10, PREMIUM20
+  - Data di nascita fuori categoria: il wizard blocca e spiega
+  - Tappa Bari: sold out, lista d'attesa senza pagamento
+  - Tappa Cagliari: iscrizioni non ancora aperte
+  - Link diretto a una tappa: proposta-1/index.html#evento=roma-2026
+  - Le iscrizioni restano salvate nel browser (localStorage)
+
+Placeholder
+  Coach ospiti, bio, palmarès, piscine, indirizzi, prezzi, testimonianze e partner sono inventati.
+  Pagamenti, email, attestati e verifica certificati sono simulati.

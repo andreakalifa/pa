@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premium Academy · Proposta 5 · Punto</title>
+<link rel="icon" href="../assets/img/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,800;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/core.css">
+<style>
+:root{
+  --w:#fff; --ink:#1d1a1b; --g:#242021; --red:#d70e20; --mist:#f5f4f4; --line:#e8e5e5; --mute:#8a8384;
+  --pa-bg:#fff; --pa-surface:#f5f4f4; --pa-fg:#1d1a1b; --pa-muted:#8a8384; --pa-line:#e8e5e5;
+  --pa-radius:22px; --pa-display:'Hanken Grotesk',sans-serif; --pa-body:'Hanken Grotesk',sans-serif; --pa-display-style:normal; --pa-display-weight:600;
+  --pa-map-land:#f1eeee;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--w);color:var(--ink);font:400 18px/1.6 'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.split{display:grid;grid-template-columns:minmax(0,44%) 1fr}
+
+/* pannello fisso sinistro */
+.panel{position:sticky;top:0;height:100svh;background:var(--g);color:#fff;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:30px 36px}
+.panel .brand{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:3}
+.panel .brand img{height:30px}
+.panel .brand a{font-size:14px;color:#c9c2c3;text-decoration:none}
+.dot{position:absolute;left:50%;top:50%;width:var(--s,62%);aspect-ratio:1;border-radius:50%;background:var(--red);transform:translate(-50%,-50%);transition:width .8s cubic-bezier(.7,0,.2,1),left .8s cubic-bezier(.7,0,.2,1),top .8s cubic-bezier(.7,0,.2,1),border-radius .8s;display:grid;place-items:center;z-index:1;overflow:hidden}
+.dot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .6s .2s;mix-blend-mode:luminosity}
+.dot.has-img img{opacity:.9}
+.dot-in{position:relative;text-align:center;padding:12%;transition:opacity .3s}
+.dot-in.fade{opacity:0}
+.dot-in .k{font-size:15px;opacity:.85}
+.dot-in .v{font-size:clamp(40px,5.2vw,86px);font-weight:800;line-height:.95;letter-spacing:-.04em;margin:8px 0}
+.dot-in .s{font-size:15px}
+.panel .cap{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:end;gap:20px;font-size:14px;color:#c9c2c3}
+.panel .cap b{color:#fff;font-weight:600}
+.panel .lines{position:absolute;inset:0;z-index:0;opacity:.35}
+.pbottom{position:relative;z-index:3;display:grid;gap:18px}
+.chipnav{position:relative;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
+.chipnav a{font-size:13px;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.2);text-decoration:none;color:#ddd}
+.chipnav a.is-on{background:#fff;color:var(--g);border-color:#fff}
+
+/* colonna destra */
+.col{min-width:0}
+.topbar{position:sticky;top:0;z-index:40;display:flex;justify-content:flex-end;gap:10px;padding:18px 36px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px)}
+.blk{padding:clamp(60px,9vh,110px) clamp(24px,5vw,80px);border-bottom:1px solid var(--line);min-height:70svh}
+.blk h2{font-size:clamp(38px,4.2vw,64px);line-height:1.02;letter-spacing:-.035em;font-weight:600;margin:0 0 22px;max-width:16ch}
+.blk .lede{font-size:clamp(19px,1.5vw,22px);color:#5a5354;max-width:46ch;margin:0 0 34px;font-weight:300}
+.hero-blk h1{font-size:clamp(46px,5.6vw,92px);line-height:.98;letter-spacing:-.045em;font-weight:300;margin:0 0 28px}
+.hero-blk h1 b{font-weight:800;display:block}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;padding-top:24px;border-top:1px solid var(--line)}
+.facts div{font-size:15px;color:var(--mute)}
+.facts b{display:block;font-size:30px;color:var(--ink);font-weight:600;letter-spacing:-.02em}
+
+/* elenco per mese */
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.tools select,.tools input{font:500 15px 'Hanken Grotesk';padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);min-width:0}
+.tools input{flex:1 1 200px}
+.month{margin-top:34px}
+.month h3{font-size:14px;font-weight:600;color:var(--red);margin:0 0 6px;text-transform:capitalize}
+.ev{display:grid;grid-template-columns:118px 1fr auto;gap:22px;align-items:center;padding:22px 0;border-top:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;font:inherit;color:inherit}
+.ev:hover .ev-c{color:var(--red)}
+.ev:hover .ev-arrow{background:var(--red);color:#fff;transform:rotate(-45deg)}
+.ev-d{white-space:nowrap;font-size:40px;font-weight:300;letter-spacing:-.04em;line-height:1}
+.ev-d small{display:block;font-size:13px;color:var(--mute);letter-spacing:0;margin-top:4px}
+.ev-c{font-size:clamp(26px,2.4vw,34px);font-weight:600;letter-spacing:-.03em;line-height:1.1;transition:color .2s}
+.ev-v{font-size:15px;color:var(--mute)}
+.ev-r{display:flex;align-items:center;gap:16px}
+.ev-arrow{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:20px;transition:.3s}
+.seatline{display:flex;gap:3px;margin-top:10px}
+.seatline i{height:4px;flex:1;border-radius:4px;background:var(--line)}
+.seatline i.on{background:var(--ink)}
+@media (max-width:640px){.ev{grid-template-columns:84px 1fr}.ev-r{grid-column:2;justify-content:space-between}.ev-arrow{display:none}.ev-d{font-size:30px}}
+
+/* mappa + regioni */
+.mapgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.mapgrid .pa-map{max-width:400px;margin:auto}
+.reg{list-style:none;margin:0;padding:0;columns:2;column-gap:24px}
+.reg li{break-inside:avoid;padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:16px}
+.reg li button{background:none;border:0;font:inherit;cursor:pointer;padding:0;color:inherit;text-align:left}
+.reg li button:hover{color:var(--red)}
+.reg li span{color:var(--mute)}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+
+/* metodo */
+.method{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.method div{background:#fff;padding:30px}
+.method h3{margin:0 0 8px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.method p{margin:0;color:#5a5354;font-size:16px}
+.timeline{margin-top:40px;display:grid;grid-template-columns:20fr 60fr 10fr;gap:6px}
+.timeline div{padding:16px;border-radius:14px;background:var(--mist);font-size:14px}
+.timeline div:nth-child(2){background:var(--red);color:#fff}
+.timeline div:nth-child(3){background:var(--g);color:#fff}
+.timeline b{display:block;font-size:26px;font-weight:600}
+@media (max-width:600px){.method{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}}
+.steps{list-style:none;padding:0;margin:40px 0 0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:60px 1fr;gap:10px;padding:18px 0;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--mist);display:grid;place-items:center;font-weight:600}
+.steps b{font-weight:600;font-size:19px}
+.steps p{margin:2px 0 0;color:#5a5354;font-size:16px}
+
+/* coach */
+.coachrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:26px 18px}
+.cr{background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.cr .pa-avatar{border-radius:50% 50% 22px 22px;aspect-ratio:4/5;transition:border-radius .5s}
+.cr:hover .pa-avatar{border-radius:22px}
+.cr b{display:block;margin-top:12px;font-weight:600;font-size:18px}
+.cr span{color:var(--mute);font-size:14px}
+
+/* società */
+.club{background:var(--mist);border-radius:28px;padding:clamp(28px,4vw,50px);display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center}
+.club h3{font-size:clamp(30px,3vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1.05;margin:0 0 14px}
+.club ul{margin:0;padding:0;list-style:none}
+.club li{padding:12px 0;border-bottom:1px solid #e2dede;display:flex;gap:12px}
+.club li::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--red);margin-top:9px;flex:none}
+@media (max-width:900px){.club{grid-template-columns:1fr}}
+
+/* voci */
+.voices{display:grid;grid-template-columns:1fr 1fr;gap:40px 30px}
+.voices blockquote{margin:0 0 12px;font-size:22px;line-height:1.4;font-weight:300;letter-spacing:-.01em}
+.voices cite{font-style:normal;font-size:15px;color:var(--mute)}
+.voices cite b{color:var(--ink);font-weight:600}
+@media (max-width:760px){.voices{grid-template-columns:1fr}}
+.gal{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:40px;padding-bottom:10px}
+.gal figure{flex:0 0 min(320px,80%);aspect-ratio:4/5;margin:0;border-radius:22px;overflow:hidden;scroll-snap-align:start}
+.gal img{width:100%;height:100%;object-fit:cover;object-position:top}
+.reads a{display:grid;grid-template-columns:1fr auto;gap:20px;padding:20px 0;border-top:1px solid var(--line);text-decoration:none;align-items:center}
+.reads a:hover b{color:var(--red)}
+.reads b{font-weight:600;font-size:21px;letter-spacing:-.02em;transition:color .2s}
+.reads span{color:var(--mute);font-size:14px;white-space:nowrap}
+.spons{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:50px;color:#b9b2b3;font-weight:600;font-size:20px}
+.pa-faq-q{font-size:19px;font-weight:500}
+.news{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.news input{flex:1 1 240px;padding:16px 20px;border-radius:999px;border:1px solid var(--line);font:500 16px 'Hanken Grotesk'}
+footer{padding:40px clamp(24px,5vw,80px) 50px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;color:var(--mute);font-size:14px}
+footer img{height:70px}
+footer nav{display:flex;gap:18px;flex-wrap:wrap}
+footer a{text-decoration:none}
+
+@media (max-width:960px){
+  .split{grid-template-columns:1fr}
+  .panel{position:relative;height:auto;min-height:0;padding:20px}
+  .dot{position:relative;left:auto;top:auto;transform:none;width:min(360px,80vw)!important;margin:30px auto;border-radius:50%!important}
+  .panel .cap{display:none}
+  .chipnav{display:none}
+  .topbar{padding:12px 20px}
+  .blk{min-height:0}
+  .facts{grid-template-columns:1fr 1fr 1fr;gap:12px}.facts b{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="split">
+  <aside class="panel" aria-live="polite">
+    <svg class="lines" viewBox="0 0 400 800" preserveAspectRatio="none" aria-hidden="true"><g stroke="#d70e20" stroke-width="1" fill="none"><path d="M-40 800 L260 0"/><path d="M60 800 L360 0"/><path d="M300 800 L420 480"/></g></svg>
+    <div class="brand"><img src="../assets/img/mark-white.png" alt="Premium Academy"><a href="../index.html">← Tutte le proposte</a></div>
+    <div class="dot" id="dot"><img src="../assets/img/coaches-duo.jpg" alt=""><div class="dot-in" id="dotin"></div></div>
+    <div class="pbottom"><nav class="chipnav" id="chipnav" aria-label="Sezioni"></nav>
+    <div class="cap"><span id="capL"></span><span><b>Info e adesioni</b><br>Alessandro 333 744 2984</span></div></div>
+  </aside>
+
+  <div class="col">
+    <div class="topbar"><button class="pa-btn is-ghost is-sm" data-pa="account">Area riservata</button><button class="pa-btn is-sm" data-pa="register">Iscriviti</button></div>
+
+    <section class="blk hero-blk" id="intro" data-dot="intro" data-label="Intro">
+      <h1>Nuotare meglio, <b>un dettaglio alla volta.</b></h1>
+      <p class="lede">Premium Academy porta in giro per l’Italia weekend di collegiale con atleti della nazionale. Ogni fascia oraria è pensata per una categoria, con pochi atleti per coach.</p>
+      <div class="cta"><a class="pa-btn" href="#calendario">Vedi il calendario</a><a class="pa-btn is-ghost" href="#metodo">Come lavoriamo</a></div>
+      <div class="facts"><div><b id="fT">9</b>tappe in stagione</div><div><b>7</b>fasce per weekend</div><div><b>1:6</b>coach per atleti</div></div>
+    </section>
+
+    <section class="blk" id="calendario" data-dot="next" data-label="Calendario">
+      <h2>Calendario 2026/27</h2>
+      <p class="lede">Scegli la città. Nel programma trovi fasce, posti rimasti e coach presenti.</p>
+      <div class="tools">
+        <input type="search" id="fq" placeholder="Cerca città o piscina" aria-label="Cerca">
+        <select id="fc" aria-label="Categoria"><option value="">Ogni categoria</option></select>
+        <select id="fr" aria-label="Regione"><option value="">Ogni regione</option></select>
+      </div>
+      <div id="months"></div>
+    </section>
+
+    <section class="blk" data-dot="map" data-label="Mappa">
+      <div class="mapgrid"><div><h2>Da nord a sud</h2><p class="lede">Nove città nella stagione 2026/27, con strutture da 25 e 50 metri.</p><ul class="reg" id="reg"></ul></div><div id="map"></div></div>
+    </section>
+
+    <section class="blk" id="metodo" data-dot="method" data-label="Metodo">
+      <h2>Il metodo in novanta minuti</h2>
+      <p class="lede">Prima fuori dall’acqua, poi dentro. Ogni atleta esce con qualcosa di preciso su cui lavorare.</p>
+      <div class="method" id="method"></div>
+      <div class="timeline"><div><b>20′</b>A secco</div><div><b>60′</b>In acqua, corsie per livello</div><div><b>10′</b>Video</div></div>
+      <ol class="steps" id="steps"></ol>
+    </section>
+
+    <section class="blk" id="coach" data-dot="coach" data-label="Coach">
+      <h2>I coach</h2>
+      <p class="lede">Alessandro Calvi e Marco Orsi in ogni tappa, affiancati da ospiti olimpionici e preparatori federali.</p>
+      <div class="coachrow" id="coachrow"></div>
+    </section>
+
+    <section class="blk" data-dot="club" data-label="Società">
+      <div class="club"><div><h3>Porti una squadra intera?</h3><p style="color:#5a5354;margin:0 0 20px">Un unico form per tutti gli atleti, un solo pagamento, e un posto alla Clinic per il tuo allenatore.</p><button class="pa-btn" data-pa="register">Iscrivi la società</button></div>
+        <ul><li>Codice SOCIETA10 da 8 atleti</li><li>Report tecnico per ogni atleta</li><li>Fatturazione alla società</li><li>Posti tribuna riservati</li></ul></div>
+    </section>
+
+    <section class="blk" data-dot="voices" data-label="Voci">
+      <h2>Chi c’era</h2>
+      <div class="voices" id="voices"></div>
+      <div class="gal" id="gal"></div>
+    </section>
+
+    <section class="blk" data-dot="read" data-label="Consigli">
+      <h2>Da leggere tra una tappa e l’altra</h2>
+      <div class="reads" id="reads"></div>
+      <div class="spons" id="spons" aria-label="Partner"></div>
+    </section>
+
+    <section class="blk" id="faq" data-dot="faq" data-label="FAQ">
+      <h2>Domande frequenti</h2>
+      <div id="faqlist"></div>
+      <h3 style="margin:60px 0 0;font-weight:600;font-size:26px;letter-spacing:-.02em">Ti avvisiamo quando apre una nuova tappa</h3>
+      <form class="news" data-newsletter><input type="email" placeholder="La tua email" aria-label="Email"><button class="pa-btn">Avvisami</button></form>
+    </section>
+
+    <footer><img src="../assets/img/logo-dark.png" alt="Premium Academy"><nav><a href="https://wa.me/393337442984">WhatsApp</a><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Privacy</a><a href="#">Regolamento</a></nav><span>© 2026 Premium Academy</span></footer>
+  </div>
+</div>
+
+<script>window.PA_BASE='../'</script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/core.js"></script>
+<script>
+(function(){
+  const {D,$,$$,esc,fmt,eur,cat,coach,eventInfo,filter,countdown,pad,italyMap,bindMap,avatar,photo,faqHtml,bindFaq,slotLeft}=PA;
+  const n=PA.nextOpen(),ni=eventInfo(n);
+  let cdTxt='';
+  countdown(n.startDate,v=>{cdTxt=`${v.days}g ${pad(v.hours)}:${pad(v.minutes)}:${pad(v.seconds)}`;const el=$('#cdv');if(el)el.textContent=cdTxt});
+
+  /* stati del punto rosso */
+  const states={
+    intro:{s:'62%',img:true,html:``,cap:'Head coach: Alessandro Calvi e Marco Orsi'},
+    next:{s:'70%',html:()=>`<div class="k">Prossima tappa</div><div class="v">${esc(n.city)}</div><div class="s">${fmt.range(n)}<br><span id="cdv">${cdTxt}</span></div>`,cap:()=>`${ni.left} posti liberi · da ${eur(ni.priceFrom)}`},
+    map:{s:'44%',html:`<div class="v">${PA.upcoming().length}</div><div class="s">città</div>`,cap:'Tocca un punto della mappa'},
+    method:{s:'78%',html:`<div class="k">Per fascia</div><div class="v">90′</div><div class="s">20 a secco · 60 in acqua · 10 video</div>`,cap:'Tecnica, virate, partenze, 5° stile'},
+    coach:{s:'66%',img:true,html:``,cap:'Ospiti diversi a ogni tappa'},
+    club:{s:'56%',html:`<div class="k">Codice società</div><div class="v" style="font-size:clamp(28px,3vw,48px)">SOCIETA10</div><div class="s">da 8 atleti</div>`,cap:'Iscrizione multipla'},
+    voices:{s:'50%',html:`<div class="v">2</div><div class="s">tappe già fatte</div>`,cap:'Pescara e Verona'},
+    read:{s:'40%',html:`<div class="v">${D.articles.length}</div><div class="s">consigli</div>`,cap:'Scritti dai coach'},
+    faq:{s:'34%',html:`<div class="v">?</div>`,cap:'Scrivici su WhatsApp'}
+  };
+  const dot=$('#dot'),din=$('#dotin');let cur='';
+  const val=x=>typeof x==='function'?x():x;
+  function setState(k){
+    if(k===cur)return;cur=k;const st=states[k];
+    din.classList.add('fade');
+    setTimeout(()=>{din.innerHTML=val(st.html);din.classList.remove('fade')},250);
+    dot.style.setProperty('--s',st.s);dot.classList.toggle('has-img',!!st.img);
+    $('#capL').textContent=val(st.cap);
+    $$('#chipnav a').forEach(a=>a.classList.toggle('is-on',a.dataset.k===k));
+  }
+  const blks=$$('[data-dot]');
+  $('#chipnav').innerHTML=blks.map(b=>`<a href="#" data-k="${b.dataset.dot}">${esc(b.dataset.label)}</a>`).join('');
+  $$('#chipnav a').forEach((a,i)=>a.onclick=e=>{e.preventDefault();blks[i].scrollIntoView({behavior:'smooth'})});
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setState(e.target.dataset.dot)})},{rootMargin:'-45% 0px -50% 0px'});
+  blks.forEach(b=>io.observe(b));setState('intro');
+
+  /* calendario per mese */
+  D.categories.forEach(c=>$('#fc').insertAdjacentHTML('beforeend',`<option value="${c.id}">${esc(c.label)}</option>`));
+  PA.regions().forEach(r=>$('#fr').insertAdjacentHTML('beforeend',`<option>${esc(r)}</option>`));
+  ['#fq','#fc','#fr'].forEach(s=>$(s).addEventListener('input',draw));
+  function draw(){
+    const list=filter({q:$('#fq').value,category:$('#fc').value,region:$('#fr').value});
+    const groups={};list.forEach(e=>{const k=fmt.month(e.start)+' '+e.startDate.getFullYear();(groups[k]=groups[k]||[]).push(e)});
+    $('#months').innerHTML=list.length?Object.entries(groups).map(([m,es])=>`<div class="month"><h3>${m}</h3>${es.map(e=>{const s=eventInfo(e),seg=20,on=Math.round(s.pct/100*seg);return `<button class="ev" data-pa="event" data-id="${e.id}">
+      <span class="ev-d">${e.startDate.getDate()}–${e.endDate.getDate()}<small>${fmt.weekday(e.start).slice(0,3)}–${fmt.weekday(e.endDate).slice(0,3)}</small></span>
+      <span><span class="ev-c">${esc(e.city)}</span><br><span class="ev-v">${esc(e.venue)} · ${esc(e.pool)}</span><span class="seatline" aria-label="${s.pct}% posti occupati">${Array.from({length:seg},(_,i)=>`<i class="${i<on?'on':''}"></i>`).join('')}</span></span>
+      <span class="ev-r"><span class="pa-badge is-${s.status}">${esc(s.label)}</span><span class="ev-arrow" aria-hidden="true">→</span></span></button>`}).join('')}</div>`).join(''):`<p class="lede">Nessuna tappa con questi filtri. Cambia categoria o regione.</p>`;
+  }
+  draw();
+
+  $('#map').innerHTML=italyMap({pinR:6});bindMap($('#map'));
+  $('#reg').innerHTML=PA.upcoming().map(e=>`<li><button data-pa="event" data-id="${e.id}">${esc(e.city)}</button><span>${fmt.rangeShort(e)}</span></li>`).join('');
+  $('#method').innerHTML=D.sessions.map(s=>`<div><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join('');
+  $('#steps').innerHTML=D.steps.map(([t,p])=>`<li><div><b>${esc(t)}</b><p>${esc(p)}</p></div></li>`).join('');
+  $('#coachrow').innerHTML=D.coaches.map(c=>{const ev=PA.upcoming().find(e=>e.coaches.includes(c.id))||n;return `<button class="cr" data-pa="event" data-id="${ev.id}" data-tab="coach">${avatar(c)}<b>${esc(c.name)}</b><span>${esc(c.focus)}</span></button>`}).join('');
+  $('#voices').innerHTML=D.testimonials.map(t=>`<figure style="margin:0"><blockquote>${esc(t.text)}</blockquote><cite><b>${esc(t.name)}</b>, ${esc(t.who)}</cite></figure>`).join('');
+  $('#gal').innerHTML=`<figure><img src="../assets/img/coaches-duo.jpg" alt="Coach a Pescara"></figure>`+[1,2,3,4].map(i=>`<figure>${photo(i*23,'',[3,0,1,2][i-1])}</figure>`).join('');
+  $('#reads').innerHTML=D.articles.map(a=>`<a href="#" onclick="PA.toast('Demo: articolo del blog');return false"><b>${esc(a.title)}</b><span>${esc(coach(a.coach).name)} · ${a.min} min</span></a>`).join('');
+  $('#spons').innerHTML=D.sponsors.map(s=>`<span>${esc(s)}</span>`).join('');
+  $('#faqlist').innerHTML=faqHtml();bindFaq($('#faqlist'));
+})();
+</script>
+</body>
+</html>
