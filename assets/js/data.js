@@ -1,5 +1,5 @@
 /* =========================================================
-   PREMIUM ACADEMY EXPERIENCE — dati di esempio (placeholder)
+   PREMIUM ACADEMY EXPERIENCE - dati di esempio (placeholder)
    Sostituisci qui eventi, coach e testi: è l'unico file
    da toccare per cambiare i contenuti del sito.
 
@@ -74,8 +74,8 @@ window.PA_DATA = (function () {
     { id: 'palermo', w: 18, city: 'Palermo', region: 'Sicilia', venue: 'Piscina Comunale Palermo', address: 'Viale del Fante 11, Palermo', pool: 'Vasca 50 m · 8 corsie', lat: 38.12, lon: 13.36, coaches: ['orsi', 'monti', 'rinaldi'], fill: 0.08, hotel: 'Hotel Favorita (−10%)', parking: 'Parcheggio interno' },
     { id: 'bologna', w: 21, city: 'Bologna', region: 'Emilia-Romagna', venue: 'Centro Nuoto Bologna Est', address: 'Via Stalingrado 77, Bologna', pool: 'Vasca 25 m · 10 corsie', lat: 44.49, lon: 11.34, coaches: ['calvi', 'orsi'], fill: 0.04, hotel: 'Hotel Fiera (convenzione società)', parking: 'Parcheggio gratuito' },
     { id: 'cagliari', w: 25, city: 'Cagliari', region: 'Sardegna', venue: 'Piscina Terramaini', address: 'Via Newton 2, Cagliari', pool: 'Vasca 50 m · 8 corsie', lat: 39.23, lon: 9.13, coaches: ['calvi', 'ferraris', 'vitale'], fill: 0, opensOn: daysFromToday(38), hotel: 'Hotel Poetto (−10%)', parking: 'Parcheggio pubblico' },
-    { id: 'pescara', w: -4, city: 'Pescara', region: 'Abruzzo', venue: 'Piscina Le Naiadi', address: 'Viale della Riviera 1, Pescara', pool: 'Vasca 50 m · 10 corsie', lat: 42.46, lon: 14.21, coaches: ['calvi', 'orsi'], fill: 1, hotel: '—', parking: '—' },
-    { id: 'verona', w: -20, city: 'Verona', region: 'Veneto', venue: 'Centro Nuoto Verona', address: 'Via Monte Baldo 9, Verona', pool: 'Vasca 25 m · 8 corsie', lat: 45.44, lon: 10.99, coaches: ['calvi', 'benassi'], fill: 1, hotel: '—', parking: '—' }
+    { id: 'pescara', w: -4, city: 'Pescara', region: 'Abruzzo', venue: 'Piscina Le Naiadi', address: 'Viale della Riviera 1, Pescara', pool: 'Vasca 50 m · 10 corsie', lat: 42.46, lon: 14.21, coaches: ['calvi', 'orsi'], fill: 1, hotel: 'Edizione conclusa', parking: 'Edizione conclusa' },
+    { id: 'verona', w: -20, city: 'Verona', region: 'Veneto', venue: 'Centro Nuoto Verona', address: 'Via Monte Baldo 9, Verona', pool: 'Vasca 25 m · 8 corsie', lat: 45.44, lon: 10.99, coaches: ['calvi', 'benassi'], fill: 1, hotel: 'Edizione conclusa', parking: 'Edizione conclusa' }
   ];
 
   function seeded(str) { let h = 2166136261; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return () => { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 1000) / 1000; }; }

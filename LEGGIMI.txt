@@ -1,32 +1,127 @@
-PREMIUM ACADEMY EXPERIENCE — sito
+PREMIUM ACADEMY EXPERIENCE
+Sito statico, direzione visiva "Corsia". Pronto per GitHub Pages.
 
-Apri index.html nel browser (doppio clic).
-Serve la connessione a internet solo per caricare i font Google.
+================================================================
+APRIRE IL SITO
+================================================================
+Doppio clic su index.html. Funziona anche senza connessione:
+i font sono ospitati qui dentro, non su Google.
 
+Su GitHub Pages: carica il CONTENUTO di questa cartella nella
+radice del repository, non la cartella stessa. index.html deve
+stare in radice, altrimenti l'indirizzo diventa /nome-cartella/.
+
+================================================================
 STRUTTURA
-  index.html            il sito
-  admin/index.html      pannello organizzatori (demo)
-  assets/js/data.js     TUTTI i contenuti: tappe, fasce, prezzi, coach, FAQ, testimonianze
-  assets/js/core.js     mappa, scheda evento, iscrizione, QR, area riservata
-  assets/css/core.css   stile dei componenti condivisi
-  assets/img/           logo in versione chiara e scura, solo marchio, foto coach
+================================================================
+index.html            il sito, una sola pagina a scorrimento
+privacy.html          informativa privacy (testo da completare)
+regolamento.html      regolamento delle tappe (testo da completare)
+404.html              pagina non trovata, la serve GitHub Pages
+admin/index.html      pannello organizzatori
 
+assets/js/data.js     TUTTI i contenuti: tappe, fasce, prezzi,
+                      categorie, coach, FAQ, testimonianze
+assets/js/api.js      strato dati: l'unico file da cambiare per
+                      passare a Django (vedi sotto)
+assets/js/core.js     mappa, scheda tappa, iscrizione, area
+                      riservata, modale, QR
+assets/css/core.css   sistema visivo: token, corsie, componenti
+assets/fonts/         Archivo e Martian Mono, ridotti ai soli
+                      caratteri usati (87 kB in tutto)
+assets/img/           logo in chiaro e scuro, marchio, foto coach
+
+================================================================
 LE DATE SI AGGIORNANO DA SOLE
-  Ogni tappa in data.js ha un campo "w": quante settimane dista dal primo
-  sabato utile. Così la demo non scade mai, anche se la apri tra sei mesi.
-  Con "w" negativo la tappa risulta già conclusa.
-  Per passare alle date vere, sostituisci "w: 2" con "start: '2027-03-13'".
+================================================================
+In data.js ogni tappa ha un campo "w": quante settimane dista dal
+primo sabato utile. Così la demo non scade mai, anche aperta tra
+sei mesi. Con "w" negativo la tappa risulta conclusa.
 
+Per passare alle date vere sostituisci
+   w: 2
+con
+   start: '2027-03-13'
+
+================================================================
 DA PROVARE
-  - Iscrizione completa: il controllo età blocca le fasce fuori categoria
-  - Sconto gruppo del 15% da 2 posti in su (più atleti o più fasce)
-  - Codici sconto: SOCIETA10, PREMIUM20
-  - Tappa Bari: sold out, lista d'attesa senza pagamento
-  - Tappa Cagliari: iscrizioni non ancora aperte
-  - Le iscrizioni restano salvate nel browser (localStorage)
+================================================================
+- Iscrizione: si parte dall'età, poi vedi solo le fasce aperte a
+  quell'età. Le altre restano sotto "Mostra anche le altre fasce".
+- Prova a premere Continua con i campi vuoti: gli errori compaiono
+  sotto ogni campo, non in un messaggio che sparisce.
+- Al passo Pagamento c'è un contatore: il posto resta bloccato per
+  dieci minuti.
+- Nel selettore "Esito da simulare" puoi provare carta rifiutata e
+  posto esaurito durante il pagamento.
+- Chiudi la modale a metà percorso: chiede conferma e salva la
+  bozza. Riaprendo propone di riprendere.
+- Modalità "Iscrivo per una società": una riga per atleta, con la
+  fascia proposta in base all'età di ciascuno.
+- Codici sconto: SOCIETA10 e PREMIUM20.
+- Bari è sold out, Cagliari non ha ancora aperto le iscrizioni.
+- Link diretto a una tappa: index.html#evento=roma
+- Tutto con la tastiera: Tab, Invio, Esc. Il focus resta dentro la
+  modale e torna al punto di partenza quando si chiude.
 
-PLACEHOLDER
-  Coach ospiti, biografie, palmarès, piscine, indirizzi, prezzi, testimonianze
-  e partner sono inventati. Le foto di Calvi e Orsi sono ritagliate dal
-  volantino: vanno sostituite con scatti in alta risoluzione.
-  Pagamenti, email, attestati e verifica dei certificati sono simulati.
+Le iscrizioni restano nel browser di chi prova (localStorage).
+
+================================================================
+PASSAGGIO A DJANGO
+================================================================
+Nessun file va riscritto. Il sito non legge mai i dati direttamente:
+passa sempre da PA_API in assets/js/api.js, e ogni metodo è già a
+Promise.
+
+Per attivare il backend, nelle pagine HTML prima di api.js:
+   <script>window.PA_API_BASE = '/api'</script>
+
+Da quel momento api.js usa l'adattatore HTTP invece di quello che
+legge data.js. L'adattatore finto resta nel file: utile per tenere
+in piedi una versione dimostrativa senza server.
+
+Endpoint attesi (l'elenco completo è in cima ad api.js):
+   GET    /api/events/
+   GET    /api/events/<id>/
+   POST   /api/holds/              blocca il posto, risponde con
+                                   token e scadenza
+   DELETE /api/holds/<token>/
+   POST   /api/registrations/      header Idempotency-Key
+   GET    /api/registrations/mine/
+
+Stati di errore che l'interfaccia sa già gestire e mostrare:
+   409 slot_full          posto esaurito, propone le alternative
+   410 hold_expired       blocco scaduto, propone di ricontrollare
+   402 payment_declined   carta rifiutata, resta sul passo
+
+Il modello dati di data.js è il primo abbozzo dei modelli Django:
+Evento, Fascia, Categoria, Coach, Struttura, Iscrizione, Atleta,
+Societa, Documento, Pagamento. L'unica entità che manca è la
+prenotazione temporanea (Hold).
+
+Attenzione al fuso orario: non passare mai una data nuda al
+costruttore Date di JavaScript, perché viene letta come UTC e per
+un utente a ovest di Roma il giorno slitta. Manda ISO completo con
+offset, oppure date pure da interpretare come locali, come fa
+data.js oggi.
+
+================================================================
+COSA RESTA DA FARE
+================================================================
+FOTOGRAFIE. Le uniche immagini reali sono quelle di Calvi e Orsi,
+ritagliate dal volantino. Servono scatti in alta risoluzione: una
+per l'apertura, i ritratti dei coach ospiti, qualche immagine
+delle tappe per la galleria. I segnaposto attuali sono disegnati e
+si vede che sono segnaposto.
+
+TESTI LEGALI. privacy.html e regolamento.html hanno la struttura
+giusta e i contenuti che servono alle iscrizioni, ma vanno rivisti
+con chi segue gli adempimenti e completati con i dati del titolare.
+
+PLACEHOLDER. Coach ospiti, biografie, palmarès, piscine, indirizzi,
+prezzi, testimonianze e partner sono inventati.
+
+SIMULATO. Pagamenti, invio email, attestati in PDF e verifica dei
+certificati. Il QR è un disegno deterministico: con il backend
+diventerà un token firmato, verificabile al check-in anche con la
+rete incerta a bordo vasca.

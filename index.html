@@ -3,377 +3,544 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#e8e6e6">
-<title>Premium Academy Experience · Collegiali di nuoto in Italia</title>
-<meta name="description" content="Weekend di collegiale con atleti della nazionale, in tutta Italia. Ogni fascia oraria è dedicata a una categoria: scegli la tappa e prenota il tuo posto in vasca.">
-<meta property="og:title" content="Premium Academy Experience">
-<meta property="og:description" content="Collegiali di nuoto in tutta Italia con atleti della nazionale. Scegli la tappa e prenota la fascia della tua categoria.">
-<meta property="og:image" content="assets/img/logo-dark.png">
+<meta name="theme-color" content="#070d10">
+<title>Premium Academy Experience · Collegiali di nuoto in tutta Italia</title>
+<meta name="description" content="Weekend di collegiale con atleti della nazionale, in nove città italiane. Ogni fascia oraria è riservata a una categoria: scegli la tappa e prenota il posto in vasca.">
+<link rel="canonical" href="https://premiumacademy.example/">
 <meta property="og:type" content="website">
-<link rel="icon" href="assets/img/mark.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
+<meta property="og:title" content="Premium Academy Experience">
+<meta property="og:description" content="Un weekend in vasca con gli azzurri. Nove tappe in Italia, una fascia oraria per ogni categoria.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon-64.png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/core.css">
 <style>
-:root{
-  --paper:#e8e6e6; --tile:#fff; --ink:#1c1819; --graph:#242021; --red:#d70e20; --mute:#7a7374; --line:#dcd8d8;
-  --pa-bg:#fff; --pa-surface:#f1efef; --pa-fg:#1c1819; --pa-muted:#7a7374; --pa-line:#e3dfdf;
-  --pa-radius:28px; --pa-display:'Bricolage Grotesque',sans-serif; --pa-body:'Bricolage Grotesque',sans-serif; --pa-display-style:normal; --pa-display-weight:800;
-  --pa-map-land:#e8e6e6;
-  --r:26px;
+/* ---------- barra superiore: una riga, massimo 72px ---------- */
+.bar { position: sticky; top: 0; z-index: 90; background: rgba(7,13,16,.86); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line-soft); }
+.bar-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; }
+.bar-logo { display: flex; align-items: center; min-height: 44px; flex: none; }
+.bar-logo img { height: 40px; width: auto; }
+.bar-nav { display: flex; gap: 4px; }
+.bar-nav a { display: flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--r-s); color: var(--foam-2); font-weight: 600; font-size: 15px; text-decoration: none; }
+.bar-nav a:hover { color: var(--foam); background: var(--ink-raised); }
+.bar-act { display: flex; align-items: center; gap: 8px; flex: none; }
+.burger { display: none; width: 48px; height: 48px; border: 1px solid var(--line-strong); border-radius: var(--r-s); background: none; cursor: pointer; }
+.burger i { display: block; width: 20px; height: 2px; margin: 4px auto; background: var(--foam); transition: transform .25s var(--ease), opacity .2s; }
+.bar.is-open .burger i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.bar.is-open .burger i:nth-child(2) { opacity: 0; }
+.bar.is-open .burger i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 920px) {
+  .burger { display: block; }
+  .bar-nav { position: absolute; left: 0; right: 0; top: 72px; flex-direction: column; gap: 0; padding: 8px var(--gutter) 22px; background: var(--ink); border-bottom: 1px solid var(--line); transform: translateY(-120%); visibility: hidden; transition: transform .3s var(--ease), visibility .3s; }
+  .bar.is-open .bar-nav { transform: none; visibility: visible; }
+  .bar-nav a { min-height: 52px; font-size: 19px; color: var(--foam); }
+  .bar-act .btn.ghost { display: none; }
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 'Bricolage Grotesque',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variation-settings:'opsz' 16}
-a{color:inherit}
-button{font-family:inherit}
-.app{display:grid;grid-template-columns:272px 1fr;min-height:100dvh}
-
-/* sidebar */
-.side{position:sticky;top:0;height:100dvh;padding:26px 16px 22px;display:flex;flex-direction:column;gap:6px}
-.side .logo{display:block;padding:0 10px 30px}
-.side .logo img{width:206px;display:block}
-.tab{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;border-radius:16px;border:0;background:none;color:var(--mute);font-size:16px;font-weight:600;cursor:pointer;text-align:left}
-.tab svg{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8}
-.tab:hover{color:var(--ink);background:rgba(0,0,0,.04)}
-.tab[aria-current="page"]{background:var(--ink);color:#fff}
-.side .bottom{margin-top:auto;display:grid;gap:10px}
-.side .help{background:var(--tile);border-radius:20px;padding:16px;font-size:14px}
-.side .help b{display:block;font-size:15px}
-.side .help a{font-weight:600}
-.back{font-size:13px;color:var(--mute);text-decoration:none;padding:6px 10px}
-.back:hover{color:var(--red)}
-
-main{padding:22px 22px 40px 0;min-width:0}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-.top h1{margin:0;font-size:clamp(28px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;font-variation-settings:'opsz' 96,'wdth' 85}
-.top .search{flex:1;max-width:420px;position:relative}
-.top .search input{width:100%;padding:14px 18px 14px 46px;border-radius:999px;border:0;background:var(--tile);font:500 15px 'Bricolage Grotesque';color:var(--ink)}
-.top .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;stroke:var(--mute);fill:none;stroke-width:2}
-.me{display:flex;align-items:center;gap:10px;background:var(--tile);border:0;padding:6px 14px 6px 6px;border-radius:999px;cursor:pointer;font-weight:600}
-.me i{width:34px;height:34px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:800}
-
-.view{display:none}
-.view.is-on{display:block;animation:vin .35s cubic-bezier(.2,.8,.2,1)}
-@keyframes vin{from{opacity:0;transform:translateY(8px)}}
-
-/* bento */
-.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(118px,auto);gap:14px}
-.t{background:var(--tile);border-radius:var(--r);padding:22px;position:relative;overflow:hidden;min-width:0}
-.t h2{margin:0;font-size:15px;font-weight:600;color:var(--mute)}
-.t.dark{background:var(--graph);color:#fff}
-.t.dark h2{color:#b7b0b1}
-.t.red{background:var(--red);color:#fff}
-.t.red h2{color:rgba(255,255,255,.8)}
-.t.link{cursor:pointer;transition:transform .2s}
-.t.link:hover{transform:translateY(-3px)}
-.span-7{grid-column:span 7}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-3{grid-column:span 3}.span-8{grid-column:span 8}.span-6{grid-column:span 6}
-.row-2{grid-row:span 2}.row-3{grid-row:span 3}
-
-.hero-t{display:flex;flex-direction:column;justify-content:space-between;min-height:390px}
-.hero-t .city{font-size:clamp(56px,7.4vw,118px);font-weight:800;line-height:.85;letter-spacing:-.05em;font-variation-settings:'opsz' 96,'wdth' 75;margin:16px 0 6px}
-.hero-t .sub{font-size:18px;opacity:.9}
-.hero-t .mark{position:absolute;right:-30px;top:-14px;width:54%;opacity:.17}
-/* ripresa del filetto "— EXPERIENCE —" del marchio */
-.rule{display:flex;align-items:center;gap:12px;margin:0;font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.9)}
-.rule::before,.rule::after{content:'';height:1px;background:currentColor;opacity:.55}
-.rule::before{width:22px;flex:none}
-.rule::after{flex:1}
-.cd{display:flex;gap:8px;margin:20px 0}
-.cd div{background:rgba(0,0,0,.18);border-radius:16px;padding:10px 12px;min-width:66px;font-size:12px}
-.cd b{display:block;font-size:28px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;font-variation-settings:'wdth' 75}
-.hero-t .act{display:flex;gap:10px;flex-wrap:wrap}
-.hero-t .pa-btn{background:#fff;color:var(--red);border-color:#fff}
-.hero-t .pa-btn.is-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
-
-.gauge{display:grid;place-items:center;height:100%;padding-top:6px}
-.gauge svg{width:100%;max-width:220px}
-.gauge .v{font-size:44px;font-weight:800;fill:var(--ink);font-variation-settings:'wdth' 75}
-.gauge p{margin:4px 0 0;text-align:center;color:var(--mute);font-size:14px}
-.gauge-h .gauge{grid-template-columns:130px 1fr;justify-items:start;gap:16px;align-items:center}.gauge-h .gauge p{text-align:left;font-size:16px;color:var(--ink)}
-@media (max-width:860px){.gauge-h .gauge{grid-template-columns:1fr;justify-items:center}.gauge-h .gauge p{text-align:center}}
-
-.photo-t{padding:0;min-height:260px;background:#2b2728}
-.photo-t img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;position:absolute;inset:0}
-.photo-t .cap{position:absolute;left:14px;right:14px;bottom:14px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-radius:18px;padding:12px 14px;color:var(--ink)}
-.photo-t .cap b{display:block}
-.photo-t .cap span{font-size:13px;color:var(--mute)}
-
-.cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.cats button{border:1px solid var(--line);background:none;padding:10px 14px;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;text-align:left;line-height:1.2}
-.cats button small{display:block;font-weight:400;color:var(--mute);font-size:12px}
-.cats button:hover{border-color:var(--ink)}
-
-.mini-map{height:100%;display:grid;grid-template-rows:auto 1fr}
-.mini-map .pa-map{max-height:300px;margin:auto}
-.pa-pin-label{font-size:12px}
-
-.mine .row{display:flex;align-items:center;gap:12px;margin-top:14px}
-.mine .pa-qr{border-radius:10px;flex:none}
-.mine .row b{display:block;font-size:18px}
-.mine .row span{color:#b7b0b1;font-size:14px}
-
-.big-num{font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em;font-variation-settings:'wdth' 75;margin-top:10px}
-.quote-t p{font-size:19px;line-height:1.35;margin:12px 0 14px;font-weight:500}
-.quote-t small{color:var(--mute)}
-.steps-t ol{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;counter-reset:s}
-.steps-t li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
-.steps-t li::before{content:counter(s);width:30px;height:30px;border-radius:10px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
-.steps-t li b{display:block}
-.steps-t li span{color:#b7b0b1;font-size:14px}
-.news-t form{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.news-t input{flex:1 1 180px;border:0;border-radius:999px;padding:13px 16px;font:500 15px 'Bricolage Grotesque';background:var(--paper)}
-.blog-t a{display:block;text-decoration:none;padding:12px 0;border-bottom:1px solid var(--line)}
-.blog-t a:last-child{border:0}
-.blog-t a b{display:block;font-weight:600;line-height:1.3}
-.blog-t a small{color:var(--mute)}
-.num-t p{margin:8px 0 0;color:var(--mute);font-size:14px;text-transform:capitalize}
-.club-t{display:flex;flex-direction:column}
-.club-t .pa-btn{align-self:flex-start;margin-top:auto}
-.spons-t{display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:12px}
-.spons-t span{font-weight:800;color:#b3adae;font-size:18px;font-variation-settings:'wdth' 75}
-
-@media (max-width:1180px){
-  .span-7,.span-8{grid-column:span 12}.span-5,.span-4,.span-6{grid-column:span 6}.span-3{grid-column:span 6}
-  .row-3{grid-row:span 2}
+@media (max-width: 460px) {
+  .bar-in { gap: 10px; }
+  .bar-logo img { height: 32px; }
+  .burger { width: 44px; height: 44px; }
 }
 
-/* vista tappe */
-.filterbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.filterbar select{border:0;background:var(--tile);border-radius:999px;padding:12px 16px;font:600 14px 'Bricolage Grotesque';color:var(--ink)}
-.seg{display:inline-flex;background:var(--tile);border-radius:999px;padding:4px}
-.seg button{border:0;background:none;padding:9px 16px;border-radius:999px;font-weight:600;cursor:pointer;color:var(--mute)}
-.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
-.ecard{display:flex;flex-direction:column;border:0;text-align:left;cursor:pointer;padding:0;color:inherit}
-.ecard .head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 20px 0}
-.ecard .datebox{background:var(--paper);border-radius:18px;padding:10px 12px;text-align:center;min-width:72px}
-.ecard .datebox b{display:block;font-size:26px;font-weight:800;line-height:1;font-variation-settings:'wdth' 75}
-.ecard .datebox small{font-size:12px;font-weight:700;color:var(--red)}
-.ecard .body{padding:16px 20px 20px}
-.ecard h3{margin:0;font-size:30px;font-weight:800;letter-spacing:-.03em;font-variation-settings:'wdth' 80}
-.ecard p{margin:2px 0 14px;color:var(--mute);font-size:14px}
-.ecard .slotsmini{display:flex;gap:4px;margin-bottom:10px}
-.ecard .slotsmini i{flex:1;height:26px;border-radius:6px;background:var(--paper);position:relative;overflow:hidden}
-.ecard .slotsmini i::after{content:'';position:absolute;left:0;bottom:0;right:0;height:var(--h);background:var(--red);opacity:.85}
-.ecard .foot{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--mute)}
-.ecard .foot b{color:var(--ink)}
-.list-empty{padding:40px;background:var(--tile);border-radius:var(--r);text-align:center}
+/* ---------- hero ---------- */
+.hero { position: relative; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding: 60px 0 0; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(120% 80% at 78% 12%, rgba(215,14,32,.2), transparent 58%); }
+.hero-grid { display: grid; grid-template-columns: 1.22fr .78fr; gap: 48px; align-items: center; flex: 1; padding-block: 40px; }
+.hero h1 { margin: 0 0 22px; font-size: clamp(34px, 4.7vw, 62px); text-wrap: nowrap; }
+@media (max-width: 640px) { .hero h1 { text-wrap: balance; } .hero h1 br { display: none; } }
+.hero .lede { margin-bottom: 34px; }
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-figure { position: relative; }
+.hero-figure img { width: 100%; height: auto; border-radius: var(--r-m); background: var(--ink-raised); }
+.hero-figure figcaption { margin-top: 12px; font-size: 13px; color: var(--foam-3); }
+.hero-stats { display: flex; gap: 32px; flex-wrap: wrap; padding: 26px 0 0; border-top: 1px solid var(--line); margin-top: 34px; }
+.hero-stats div { font-size: 14px; color: var(--foam-2); }
+.hero-stats b { display: block; font: 700 32px/1 var(--f-sans); color: var(--foam); font-variant-numeric: tabular-nums; font-variation-settings: 'wdth' 100; margin-bottom: 4px; }
+@media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; gap: 30px; } .hero { min-height: 0; padding-bottom: 36px; } .hero-stats { margin-top: 26px; padding-top: 22px; gap: 24px; } }
 
-/* calendario */
-.cal{display:grid;grid-template-columns:1fr 340px;gap:14px}
-.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.cal-head h2{margin:0;font-size:28px;text-transform:capitalize;font-weight:800;color:var(--ink)}
-.cal-head div{display:flex;gap:6px}
-.cal-head button{width:42px;height:42px;border-radius:50%;border:0;background:var(--paper);font-size:18px;cursor:pointer}
-.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.grid7 .dn{font-size:12px;color:var(--mute);text-align:center;padding:6px 0;font-weight:600}
-.day{aspect-ratio:1;border-radius:14px;display:flex;flex-direction:column;justify-content:space-between;padding:8px;font-weight:600;font-size:14px;background:var(--paper);border:0;text-align:left;min-width:0}
-.day.out{background:none;color:#c9c4c4}
-.day.ev{background:var(--red);color:#fff;cursor:pointer}
-.day.ev.past{background:var(--graph)}
-.day.ev small{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.day.today{box-shadow:inset 0 0 0 2px var(--ink)}
-.agenda h2{margin:0 0 10px}
-.agenda button{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center;width:100%;border:0;background:none;padding:10px 0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer}
-.agenda button b{font-size:22px;font-weight:800;text-align:center;line-height:1}
-.agenda button b small{display:block;font-size:11px;color:var(--red)}
-.agenda button span{font-weight:600}
-.agenda button span small{display:block;color:var(--mute);font-weight:400}
-@media (max-width:1100px){.cal{grid-template-columns:1fr}}
+/* banda della prossima tappa, in fondo all'hero */
+.next { background: var(--ink-surface); border-block: 1px solid var(--line); }
+.next-in { display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center; padding: 24px 0; }
+.next-city { font-size: clamp(30px, 4vw, 52px); font-weight: 800; line-height: 1; letter-spacing: -.03em; font-variation-settings: 'wdth' 112; }
+.next-city small { display: block; margin-top: 7px; font-size: 14px; font-weight: 400; color: var(--foam-2); letter-spacing: 0; font-variation-settings: 'wdth' 100; }
+.next-mid { display: grid; gap: 10px; }
+.next-left { display: flex; justify-content: space-between; font-size: 13px; color: var(--foam-2); }
+@media (max-width: 860px) { .next-in { grid-template-columns: 1fr; gap: 18px; } .next-in .clock { flex-wrap: wrap; } }
 
-/* coach view */
-.coachgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-.ccard{padding:10px;cursor:pointer}
-.ccard .pa-avatar{border-radius:20px;aspect-ratio:1}
-.ccard h3{margin:12px 8px 0;font-size:20px;font-weight:800}
-.ccard p{margin:2px 8px 6px;color:var(--mute);font-size:14px}
-.ccard .st{display:flex;gap:6px;margin:8px;flex-wrap:wrap}
-.ccard .st span{background:var(--paper);border-radius:10px;padding:5px 9px;font-size:12px}
-.ccard .st span b{font-weight:800}
+/* ---------- sezioni ---------- */
+.sec { padding: clamp(68px, 9vw, 130px) 0; }
+.sec-head { display: grid; gap: 16px; margin-bottom: 44px; max-width: 72ch; }
+.sec-head h2 { max-width: 20ch; }
 
-/* profilo */
-.prof{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media (max-width:1000px){.prof{grid-template-columns:1fr}}
-
-/* mobile: tab bar in basso */
-@media (max-width:860px){
-  .app{grid-template-columns:1fr}
-  .side{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;z-index:80;flex-direction:row;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.9);backdrop-filter:blur(16px);border-top:1px solid var(--line);justify-content:space-around;gap:0}
-  .side .logo,.side .bottom{display:none}
-  .tab{flex-direction:column;gap:3px;font-size:11px;padding:6px 8px;width:auto;border-radius:12px}
-  .tab[aria-current="page"]{background:none;color:var(--red)}
-  main{padding:14px 12px 110px}
-  .top{flex-wrap:wrap;gap:10px 12px}
-  .mlogo{order:1}
-  .me{order:2;margin-left:auto}
-  .top h1{order:3;flex-basis:100%;font-size:26px}
-  .top .search{order:4;max-width:none;flex-basis:100%}
-  .bento{grid-template-columns:1fr 1fr;gap:10px}
-  .bento>.t{grid-column:span 2!important;grid-row:auto!important}
-  .bento>.t.half{grid-column:span 1!important}
-  .t{padding:18px;border-radius:22px}
-  .hero-t{min-height:340px}
-  .big-num{font-size:44px}
-  .mlogo{display:block!important}
+/* ---------- la stagione: una corsia per tappa ---------- */
+.tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools select { min-height: 44px; padding: 10px 14px; background: var(--ink-surface); color: var(--foam); border: 1px solid var(--line-strong); border-radius: var(--r-pill); font-weight: 600; font-size: 14px; }
+.tools .count { font-size: 14px; color: var(--foam-2); margin-left: auto; }
+.season { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+.lanes { list-style: none; margin: 18px 0 0; padding: 0; }
+.lane { position: relative; }
+.lane-btn {
+  display: grid; grid-template-columns: 104px 1fr auto; gap: 24px; align-items: center;
+  width: 100%; padding: 22px 8px; border: 0; border-top: 1px solid var(--line);
+  background: none; color: inherit; text-align: left; cursor: pointer;
+  transition: background .2s var(--ease), padding .2s var(--ease);
 }
-.mlogo{display:none;height:36px;width:auto}
+.lanes li:last-child .lane-btn { border-bottom: 1px solid var(--line); }
+.lane-btn:hover, .lane-btn:focus-visible { background: var(--ink-surface); padding-inline: 16px; }
+.lane-date { font: 600 15px/1.3 var(--f-mono); font-variant-numeric: tabular-nums; letter-spacing: -.03em; color: var(--foam-2); }
+.lane-date b { display: block; font-size: 26px; color: var(--foam); }
+.lane-main { display: grid; }
+.lane-city { display: block; font-size: clamp(27px, 3.4vw, 42px); font-weight: 800; line-height: 1; letter-spacing: -.03em; font-variation-settings: 'wdth' 108; }
+.lane-venue { display: block; margin: 6px 0 12px; font-size: 14px; color: var(--foam-2); }
+.lane-right { display: grid; gap: 9px; justify-items: end; }
+.lane-price { font: 600 15px var(--f-mono); color: var(--foam-2); font-variant-numeric: tabular-nums; }
+.lane-price b { color: var(--foam); }
+.lane-btn:hover .lane-city { color: var(--red-bright); }
+.lane-empty { padding: 36px 0; color: var(--foam-2); border-top: 1px solid var(--line); }
+.mapbox { position: sticky; top: 96px; padding: 24px; background: var(--ink-surface); border: 1px solid var(--line); border-radius: var(--r-m); }
+.mapbox h3 { margin: 0 0 6px; font-size: 17px; font-weight: 700; }
+.mapbox p { margin: 0 0 14px; font-size: 14px; color: var(--foam-2); }
+@media (max-width: 1040px) { .season { grid-template-columns: 1fr; gap: 32px; } .mapbox { position: static; max-width: 460px; } }
+@media (max-width: 620px) {
+  .lane-btn { grid-template-columns: 1fr auto; gap: 6px 16px; padding: 20px 4px; }
+  .lane-date { grid-column: 1; font-size: 13px; }
+  .lane-date b { display: inline; font-size: 18px; margin-right: 6px; }
+  .lane-main { grid-column: 1 / -1; grid-row: 2; }
+  .lane-right { grid-column: 2; grid-row: 1; }
+  .lane-price { display: none; }
+}
+
+/* ---------- metodo: la fascia in tre tempi ---------- */
+.split { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-m); overflow: hidden; margin-bottom: 14px; }
+.split div { padding: 28px 24px; background: var(--ink-surface); }
+.split b { display: block; font: 600 clamp(38px, 5vw, 58px)/1 var(--f-mono); letter-spacing: -.05em; color: var(--red-bright); margin-bottom: 10px; }
+.split h3 { margin: 0 0 6px; font-size: 18px; font-weight: 700; }
+.split p { margin: 0; font-size: 15px; color: var(--foam-2); }
+.disc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.disc article { padding: 22px; border: 1px solid var(--line); border-left: 3px solid var(--red); border-radius: var(--r-s); background: var(--ink-surface); }
+.disc h3 { margin: 0 0 7px; font-size: 19px; font-weight: 800; }
+.disc p { margin: 0; font-size: 15px; color: var(--foam-2); }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } .disc { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .disc { grid-template-columns: 1fr; } }
+
+/* ---------- coach: fila a scorrimento ---------- */
+.coachrow { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 268px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+.ccard { scroll-snap-align: start; border: 0; padding: 0; background: none; color: inherit; text-align: left; cursor: pointer; }
+.ccard .pa-avatar { border-radius: var(--r-m); transition: filter .3s var(--ease); filter: grayscale(.35); }
+.ccard:hover .pa-avatar, .ccard:focus-visible .pa-avatar { filter: none; }
+.ccard h3 { margin: 14px 0 3px; font-size: 20px; font-weight: 800; }
+.ccard p { margin: 0; font-size: 14px; color: var(--foam-2); }
+.ccard .role { color: var(--red-bright); font-weight: 600; margin-bottom: 4px; }
+
+/* ---------- società ---------- */
+.club { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-m); overflow: hidden; }
+.club > div { padding: clamp(28px, 4vw, 52px); background: var(--ink-surface); }
+.club ul { list-style: none; margin: 24px 0 30px; padding: 0; display: grid; gap: 1px; }
+.club li { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; display: grid; grid-template-columns: 22px 1fr; gap: 12px; }
+.club li svg { color: var(--red-bright); margin-top: 3px; }
+.club-code { display: grid; place-content: center; text-align: center; padding: clamp(32px, 4vw, 52px) clamp(24px, 3vw, 40px) !important; background: var(--ink-raised) !important; }
+.club-code span { font-size: 13px; color: var(--foam-2); letter-spacing: .14em; text-transform: uppercase; }
+.club-code b { display: block; margin: 12px 0; font: 700 clamp(34px, 5vw, 56px)/1 var(--f-mono); letter-spacing: -.04em; color: var(--red-bright); }
+@media (max-width: 860px) { .club { grid-template-columns: 1fr; } }
+
+/* ---------- voci ---------- */
+.quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); border-block: 1px solid var(--line); }
+.quotes figure { margin: 0; padding: 32px var(--gutter); background: var(--ink); }
+.quotes figure:nth-child(even) { padding-left: 32px; }
+@media (max-width: 760px) { .quotes figure, .quotes figure:nth-child(even) { padding-inline: var(--gutter); } }
+.quotes blockquote { margin: 0 0 18px; font-size: clamp(18px, 1.8vw, 21px); line-height: 1.45; }
+.quotes figcaption { font-size: 14px; color: var(--foam-2); }
+.quotes figcaption b { display: block; color: var(--foam); font-size: 15px; }
+@media (max-width: 760px) { .quotes { grid-template-columns: 1fr; } }
+.gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 320px); gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 32px calc(var(--gutter) * -1) 0; padding: 0 var(--gutter) 14px; }
+.gallery figure { margin: 0; scroll-snap-align: start; aspect-ratio: 4/3; border-radius: var(--r-s); overflow: hidden; background: var(--ink-raised); }
+.gallery img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* ---------- consigli e partner ---------- */
+.reads { border-top: 1px solid var(--line); }
+.reads a { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 22px 8px; border-bottom: 1px solid var(--line); text-decoration: none; transition: background .2s var(--ease), padding .2s var(--ease); }
+.reads a:hover { background: var(--ink-surface); padding-inline: 16px; }
+.reads b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
+.reads span { font-size: 14px; color: var(--foam-2); }
+.reads a:hover b { color: var(--red-bright); }
+.partners { display: flex; flex-wrap: wrap; gap: 14px 40px; align-items: center; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+.partners p { margin: 0; font-size: 13px; color: var(--foam-3); flex: 1 0 100%; }
+.partners span { font-size: 19px; font-weight: 700; color: var(--foam-3); font-variation-settings: 'wdth' 92; }
+
+/* ---------- domande ---------- */
+.faqgrid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: start; }
+.faqgrid .help { padding: 22px; margin-top: 24px; border: 1px solid var(--line); border-left: 3px solid var(--red); border-radius: var(--r-s); background: var(--ink-surface); }
+.faqgrid .help b { display: block; margin-bottom: 4px; }
+.faqgrid .help p { margin: 0 0 14px; font-size: 15px; color: var(--foam-2); }
+@media (max-width: 860px) { .faqgrid { grid-template-columns: 1fr; gap: 28px; } }
+
+/* ---------- chiusura e piede ---------- */
+.closing { padding: clamp(60px, 8vw, 110px) 0; border-top: 1px solid var(--line); background: var(--ink-surface); }
+.closing-in { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+@media (max-width: 760px) { .closing-in { grid-template-columns: 1fr; } }
+.foot { padding: 56px 0 40px; border-top: 1px solid var(--line); }
+.foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 36px; }
+.foot img { width: 190px; margin-bottom: 16px; }
+.foot h3 { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: var(--foam-2); letter-spacing: .1em; text-transform: uppercase; font-variation-settings: 'wdth' 88; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; font-size: 15px; }
+.foot a { text-decoration: none; color: var(--foam-2); display: inline-flex; align-items: center; gap: 9px; min-height: 44px; }
+.foot a:hover { color: var(--foam); }
+.foot .social { display: flex; gap: 10px; margin-top: 16px; }
+.foot .social a { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: var(--r-s); }
+.foot .social a:hover { background: var(--ink-raised); border-color: var(--foam-3); }
+.legal { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--foam-3); }
+.legal nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.legal nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--foam-2); text-decoration: none; }
+.legal nav a:hover { color: var(--foam); }
+@media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-grid > :first-child { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .foot-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+/* WhatsApp: visibile anche su telefono */
+.wa { position: fixed; right: 16px; bottom: 16px; z-index: 80; width: 56px; height: 56px; border-radius: 50%; background: #1fa855; color: #fff; display: grid; place-items: center; box-shadow: 0 12px 30px rgba(3,7,9,.55); }
+.wa svg { width: 28px; height: 28px; }
+@media (min-width: 921px) { .wa { right: 24px; bottom: 24px; } }
 </style>
 </head>
 <body>
-<div class="app">
-  <nav class="side" aria-label="Sezioni app">
-    <a class="logo" href="#" data-go="home" aria-label="Premium Academy Experience, vai alla home"><img src="assets/img/logo-dark.png" alt="Premium Academy Experience"></a>
-    <button class="tab" data-go="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
-    <button class="tab" data-go="tappe"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Tappe</button>
-    <button class="tab" data-go="calendario"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendario</button>
-    <button class="tab" data-go="coach"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Coach</button>
-    <button class="tab" data-go="profilo"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 16h3"/></svg>Le mie iscrizioni</button>
-    <div class="bottom">
-      <div class="help"><b>Serve aiuto?</b>Alessandro risponde su WhatsApp<br><a href="https://wa.me/393337442984" target="_blank" rel="noopener">333 744 2984</a></div>
-      <a class="back" href="admin/index.html">Pannello organizzatori →</a>
+<a class="skip" href="#principale">Vai al contenuto</a>
+
+<header class="bar" id="bar">
+  <div class="wrap bar-in">
+    <a class="bar-logo" href="#top" aria-label="Premium Academy Experience, torna all'inizio"><img src="assets/img/logo-light.png" alt="Premium Academy Experience" width="190" height="50"></a>
+    <nav class="bar-nav" id="barnav" aria-label="Principale">
+      <a href="#tappe">Tappe</a><a href="#metodo">Metodo</a><a href="#coach">Coach</a><a href="#societa">Società</a><a href="#domande">Domande</a>
+    </nav>
+    <div class="bar-act">
+      <button class="btn ghost sm" data-pa="account">Area riservata</button>
+      <button class="btn sm" data-pa="register">Iscriviti</button>
+      <button class="burger" id="burger" aria-label="Apri il menu" aria-expanded="false" aria-controls="barnav"><i></i><i></i><i></i></button>
     </div>
-  </nav>
+  </div>
+</header>
 
-  <main>
-    <div class="top">
-      <img class="mlogo" src="assets/img/logo-dark.png" alt="Premium Academy Experience">
-      <h1 id="vtitle">Ciao, nuotatore</h1>
-      <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="Cerca una città o una piscina" aria-label="Cerca"></label>
-      <button class="me" data-pa="account"><i>MR</i><span>Area</span></button>
+<main id="principale">
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="d1">Un weekend in vasca <br>con gli azzurri</h1>
+        <p class="lede">Nove tappe da ottobre ad aprile. Ogni fascia oraria è riservata a una categoria d'età, con pochi atleti per coach e i posti contati.</p>
+        <div class="hero-cta">
+          <a class="btn lg" href="#tappe">Scegli la tappa</a>
+          <a class="btn ghost lg" href="#metodo">Com'è fatta una fascia</a>
+        </div>
+        <div class="hero-stats">
+          <div><b class="num" id="st-tappe">9</b>tappe in stagione</div>
+          <div><b class="num">90′</b>per fascia</div>
+          <div><b class="num">1:6</b>coach per atleti</div>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <img src="assets/img/coaches-duo.jpg" alt="Alessandro Calvi e Marco Orsi a bordo vasca" width="560" height="506" fetchpriority="high" decoding="async">
+        <figcaption>Alessandro Calvi e Marco Orsi, head coach di ogni tappa.</figcaption>
+      </figure>
     </div>
+    <hr class="rope">
+    <div class="next">
+      <div class="wrap next-in" id="next"></div>
+    </div>
+  </section>
 
-    <!-- HOME -->
-    <section class="view" data-view="home">
-      <div class="bento" id="bento"></div>
-    </section>
-
-    <!-- TAPPE -->
-    <section class="view" data-view="tappe">
-      <div class="filterbar">
-        <div class="seg" id="segStatus"><button aria-pressed="true" data-s="">Tutte</button><button aria-pressed="false" data-s="open">Con posti</button><button aria-pressed="false" data-s="soldout">Sold out</button></div>
-        <select id="fr" aria-label="Regione"><option value="">Tutte le regioni</option></select>
-        <select id="fc" aria-label="Categoria"><option value="">Tutte le categorie</option></select>
-        <select id="fm" aria-label="Mese"><option value="">Tutti i mesi</option></select>
+  <section class="sec" id="tappe">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="d2">La stagione, una corsia per tappa</h2>
+        <p class="lede">Apri una città per vedere il programma, i coach presenti e quanti posti restano in ogni fascia.</p>
       </div>
-      <div class="cards" id="cards"></div>
-    </section>
-
-    <!-- CALENDARIO -->
-    <section class="view" data-view="calendario">
-      <div class="cal">
-        <div class="t"><div class="cal-head"><h2 id="calm"></h2><div><button id="cprev" aria-label="Mese precedente">‹</button><button id="cnext" aria-label="Mese successivo">›</button></div></div><div class="grid7" id="grid7"></div></div>
-        <div class="t agenda"><h2>Prossime tappe</h2><div id="agenda"></div></div>
+      <div class="season">
+        <div>
+          <div class="tools">
+            <label class="sr" for="f-mese">Filtra per mese</label>
+            <select id="f-mese"><option value="">Tutti i mesi</option></select>
+            <label class="sr" for="f-cat">Filtra per categoria</label>
+            <select id="f-cat"><option value="">Tutte le categorie</option></select>
+            <span class="count" id="f-count"></span>
+          </div>
+          <ol class="lanes" id="lanes"></ol>
+          <p class="sr" role="status" aria-live="polite" id="lanes-live"></p>
+        </div>
+        <aside class="mapbox">
+          <h3>Dove andiamo</h3>
+          <p>Tocca una città per aprire il programma.</p>
+          <div id="map"></div>
+        </aside>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- COACH -->
-    <section class="view" data-view="coach"><div class="coachgrid" id="coachgrid"></div></section>
-
-    <!-- PROFILO -->
-    <section class="view" data-view="profilo">
-      <div class="prof">
-        <div class="t" id="myregs"></div>
-        <div class="t"><h2>Domande frequenti</h2><div id="faq" style="margin-top:10px"></div></div>
+  <section class="sec" id="metodo">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="d2">Novanta minuti, sempre gli stessi</h2>
+        <p class="lede">Prepari il corpo fuori dall'acqua, lo metti alla prova in vasca, e ti rivedi subito a bordo vasca.</p>
       </div>
-    </section>
-  </main>
-</div>
+      <div class="split">
+        <div><b>20′</b><h3>A secco</h3><p>Attivazione, mobilità di spalle e core, con esercizi che poi ritrovi in acqua.</p></div>
+        <div><b>60′</b><h3>In acqua</h3><p>Corsie divise per livello, un coach ogni sei atleti, lavoro sul dettaglio della giornata.</p></div>
+        <div><b>10′</b><h3>Al video</h3><p>Rivedi la tua partenza o la tua virata. Il filmato resta nella tua area riservata.</p></div>
+      </div>
+      <div class="disc" id="disc"></div>
+    </div>
+  </section>
 
-<script>window.PA_BASE='./'</script>
+  <section class="sec" id="coach">
+    <div class="wrap sec-head">
+      <h2 class="d2">Chi ti allena</h2>
+      <p class="lede">Due head coach in ogni tappa, più ospiti diversi a ogni città: olimpionici, finalisti, preparatori federali.</p>
+    </div>
+    <div class="wrap"><div class="coachrow" id="coachrow"></div></div>
+  </section>
+
+  <section class="sec" id="societa">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="d2">Porti una squadra intera</h2></div>
+      <div class="club">
+        <div>
+          <p class="lede">Un solo modulo per tutti gli atleti, con la fascia assegnata automaticamente dall'età di ciascuno e un unico pagamento.</p>
+          <ul id="clublist"></ul>
+          <button class="btn" data-pa="register">Iscrivi la società</button>
+        </div>
+        <div class="club-code">
+          <span>Codice società</span>
+          <b>SOCIETA10</b>
+          <span class="muted" style="letter-spacing:0;text-transform:none">da 8 atleti in su</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="voci">
+    <div class="wrap sec-head">
+      <h2 class="d2">Chi c'è già stato</h2>
+      <p class="lede" id="voci-sub"></p>
+    </div>
+    <div class="quotes" id="quotes"></div>
+    <div class="wrap"><div class="gallery" id="gallery"></div></div>
+  </section>
+
+  <section class="sec" id="consigli">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="d2">Da leggere tra una tappa e l'altra</h2></div>
+      <div class="reads" id="reads"></div>
+      <div class="partners" id="partners"><p>Con il sostegno di</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="domande">
+    <div class="wrap faqgrid">
+      <div>
+        <h2 class="d2">Domande</h2>
+        <div class="help">
+          <b>Non trovi la risposta?</b>
+          <p>Alessandro risponde su WhatsApp, di solito in giornata.</p>
+          <a class="btn sm" href="https://wa.me/393337442984" target="_blank" rel="noopener">Scrivi al 333 744 2984</a>
+        </div>
+      </div>
+      <div id="faq"></div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap closing-in">
+      <div>
+        <h2 class="d3">Ti avvisiamo quando apre una nuova tappa</h2>
+        <p class="lede" style="margin-top:10px">Una email quando si aprono le iscrizioni di una città. Nient'altro.</p>
+      </div>
+      <form id="news" style="display:flex;gap:10px;flex-wrap:wrap">
+        <label class="sr" for="news-mail">La tua email</label>
+        <input id="news-mail" type="email" required placeholder="nome@email.it" style="min-height:48px;min-width:220px;padding:12px 16px;background:var(--ink);color:var(--foam);border:1px solid var(--line-strong);border-radius:var(--r-pill)">
+        <button class="btn">Avvisami</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="assets/img/logo-light.png" alt="" width="190" height="50">
+        <p class="muted" style="font-size:15px;max-width:34ch;margin:0">Collegiali di nuoto in tutta Italia, con atleti della nazionale a bordo vasca.</p>
+        <div class="social">
+          <a href="#" aria-label="Instagram"></a>
+          <a href="#" aria-label="Facebook"></a>
+          <a href="https://wa.me/393337442984" target="_blank" rel="noopener" aria-label="WhatsApp"></a>
+        </div>
+      </div>
+      <div>
+        <h3>Eventi</h3>
+        <ul>
+          <li><a href="#tappe">Calendario</a></li>
+          <li><a href="#metodo">Come funziona</a></li>
+          <li><a href="#" data-pa="account">Area riservata</a></li>
+          <li><a href="admin/">Pannello organizzatori</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Info e adesioni</h3>
+        <ul>
+          <li><a href="https://wa.me/393337442984" target="_blank" rel="noopener">Alessandro, 333 744 2984</a></li>
+          <li><a href="mailto:info@premiumacademy.it">info@premiumacademy.it</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© <span id="year">2026</span> Premium Academy Experience. P.IVA 00000000000</span>
+      <nav aria-label="Documenti"><a href="privacy.html">Informativa privacy</a><a href="regolamento.html">Regolamento</a></nav>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/393337442984" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"></a>
+
 <script src="assets/js/data.js"></script>
+<script src="assets/js/api.js"></script>
 <script src="assets/js/core.js"></script>
 <script>
-(function(){
-  const {D,$,$$,esc,fmt,eur,cat,coach,eventInfo,filter,countdown,pad,italyMap,bindMap,avatar,photo,qr,faqHtml,bindFaq,store}=PA;
-  const titles={home:'Ciao, nuotatore',tappe:'Tutte le tappe',calendario:'Calendario',coach:'I coach',profilo:'Le mie iscrizioni'};
-  function go(v){
-    $$('.view').forEach(s=>s.classList.toggle('is-on',s.dataset.view===v));
-    $$('.tab').forEach(t=>t.dataset.go===v?t.setAttribute('aria-current','page'):t.removeAttribute('aria-current'));
-    $('#vtitle').textContent=titles[v];scrollTo(0,0);
-    if(v==='profilo')drawMine();
+(function () {
+  const { D, $, $$, esc, cap1, fmt, eur, cat, coach, icon, eventInfo, slotLeft, italyMap, bindMap, avatar, photo, faqHtml, bindFaq, countdown, clockHtml, toast } = PA;
+
+  /* menu su telefono */
+  const bar = $('#bar'), burger = $('#burger');
+  burger.onclick = () => {
+    const open = bar.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu');
+  };
+  $$('#barnav a').forEach(a => a.onclick = () => { bar.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); });
+
+  /* icone nel piede */
+  const socials = $$('.foot .social a');
+  ['instagram', 'facebook', 'whatsapp'].forEach((n, i) => { if (socials[i]) socials[i].innerHTML = icon(n); });
+  $('.wa').innerHTML = icon('whatsapp');
+  $('#year').textContent = new Date().getFullYear();
+
+  /* contenuti che non dipendono dall'API */
+  $('#disc').innerHTML = D.sessions.map(s => `<article><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></article>`).join('');
+  $('#clublist').innerHTML = [
+    'Una riga per atleta, con la fascia giusta proposta dall\'età',
+    'Sconto gruppo del 15% già da due posti',
+    'Report tecnico individuale dopo la tappa',
+    'Un posto in Clinic allenatori per il tuo tecnico'
+  ].map(t => `<li>${icon('check')}<span>${esc(t)}</span></li>`).join('');
+  $('#quotes').innerHTML = D.testimonials.map(t => `<figure><blockquote>${esc(t.text)}</blockquote><figcaption><b>${esc(t.name)}</b>${esc(t.who)}, ${esc(t.city)}</figcaption></figure>`).join('');
+  $('#gallery').innerHTML = `<figure><img src="assets/img/coaches-duo.jpg" alt="I coach a bordo vasca" width="560" height="420" loading="lazy" decoding="async"></figure>`
+    + [1, 2, 3, 4].map(i => `<figure>${photo(i * 29, ['Sessione a secco', 'Virate, categoria Juniores', 'Video a bordo vasca', 'Partenze dal blocco'][i - 1])}</figure>`).join('');
+  $('#reads').innerHTML = D.articles.map(a => `<a href="#" data-read><span><b>${esc(a.title)}</b><span>${esc(a.tag)}, ${esc(coach(a.coach).name)}</span></span><span>${a.min} min ${icon('arrow')}</span></a>`).join('');
+  $$('#reads a').forEach(a => a.onclick = e => { e.preventDefault(); toast('Nel prototipo gli articoli non sono ancora scritti'); });
+  $('#partners').insertAdjacentHTML('beforeend', D.sponsors.map(s => `<span>${esc(s)}</span>`).join(''));
+  $('#faq').innerHTML = faqHtml(); bindFaq($('#faq'));
+
+  $('#news').onsubmit = e => {
+    e.preventDefault();
+    const i = $('#news-mail');
+    if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(i.value.trim())) { toast('Controlla l\'indirizzo email', true); i.focus(); return; }
+    i.value = ''; toast('Fatto. Ti scriviamo alla prossima apertura');
+  };
+
+  /* ---- contenuti che arrivano dall'API ---- */
+  let stopClock = null;
+
+  function paintNext() {
+    const n = PA.nextOpen(); if (!n) return;
+    const i = eventInfo(n);
+    $('#next').innerHTML = `
+      <div class="next-city">${esc(n.city)}<small>${fmt.range(n)}. ${esc(n.venue)}</small></div>
+      <div class="next-mid">
+        <div class="next-left"><span>${esc(i.label)}</span><span class="num">${i.left} posti liberi su ${i.cap}</span></div>
+        <div class="fill"><i style="--w:${i.pct}%"></i></div>
+        <div class="clock sm" id="next-clock" aria-label="Tempo che manca alla prossima tappa"></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-pa="register" data-id="${n.id}">Prenota il posto</button><button class="btn ghost" data-pa="event" data-id="${n.id}">Programma</button></div>`;
+    if (stopClock) stopClock();
+    stopClock = countdown(n.startDate, v => { const el = $('#next-clock'); if (el) el.innerHTML = clockHtml(v); });
+    $('#st-tappe').textContent = PA.upcoming().length;
+    const lp = PA.past()[0];
+    $('#voci-sub').textContent = lp ? `Le ultime tappe: ${PA.past().map(e => e.city).join(' e ')}. I partecipanti trovano foto e video nell'area riservata.` : '';
   }
-  $$('[data-go]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();go(b.dataset.go)}));
-  $('#q').addEventListener('input',()=>{if(!$('[data-view="tappe"]').classList.contains('is-on'))go('tappe');drawCards()});
 
-  /* HOME bento */
-  const n=PA.nextOpen(),ni=eventInfo(n),regs=store.all(),mine=regs.find(r=>eventInfo(D.events.find(e=>e.id===r.eventId)).status!=='past');
-  const tq=D.testimonials[1];
-  const R=54,C=2*Math.PI*R,off=C*(1-ni.pct/100)*.75;
-  $('#bento').innerHTML=`
-    <article class="t red span-7 row-3 hero-t"><img class="mark" src="assets/img/mark-white.png" alt="">
-      <div><h2 class="rule">Prossima tappa</h2><div class="city">${esc(n.city)}</div><div class="sub">${fmt.range(n)} · ${esc(n.venue)}</div><div class="cd" id="cd"></div></div>
-      <div class="act"><button class="pa-btn" data-pa="register" data-id="${n.id}">Prenota una fascia</button><button class="pa-btn is-ghost" data-pa="event" data-id="${n.id}">Vedi programma</button></div></article>
-    <article class="t span-5 row-1 link half gauge-h" data-pa="event" data-id="${n.id}"><h2>Posti occupati a ${esc(n.city)}</h2>
-      <div class="gauge"><svg viewBox="0 0 140 110"><circle cx="70" cy="70" r="${R}" fill="none" stroke="#eeeaea" stroke-width="14" stroke-dasharray="${C*.75} ${C}" transform="rotate(135 70 70)" stroke-linecap="round"/><circle cx="70" cy="70" r="${R}" fill="none" stroke="#d70e20" stroke-width="14" stroke-dasharray="${C*.75-off} ${C}" transform="rotate(135 70 70)" stroke-linecap="round"/><text class="v" x="70" y="80" text-anchor="middle">${ni.pct}%</text></svg><p>${ni.left} posti liberi su ${ni.cap}</p></div></article>
-    <article class="t photo-t span-5 row-2 link half" data-go-coach><img src="assets/img/coaches-duo.jpg" alt="Calvi e Orsi"><div class="cap"><b>Calvi e Orsi</b><span>Head coach in tutte le tappe</span></div></article>
-    <article class="t span-4 row-2"><h2>Trova la tua fascia</h2><div class="cats">${D.categories.map(c=>`<button data-cat="${c.id}">${esc(c.label)}<small>${esc(c.ages)}</small></button>`).join('')}</div></article>
-    <article class="t dark span-4 row-2 ${mine?'mine':'steps-t'}">${mine?(()=>{const e=D.events.find(x=>x.id===mine.eventId);return `<h2>La tua prossima iscrizione</h2><div class="row">${qr(mine.code,90)}<div><b>${esc(e.city)}</b><span>${fmt.range(e)}<br>${mine.code}</span></div></div><button class="pa-btn is-sm" style="margin-top:16px" data-pa="account">Apri il pass</button>`})():`<h2>Come funziona</h2><ol>${D.steps.map(([t,p])=>`<li><div><b>${esc(t)}</b><span>${esc(p)}</span></div></li>`).join('')}</ol>`}</article>
-    <article class="t span-4 row-2 mini-map"><h2>${PA.upcoming().length} città, una mappa</h2><div id="mmap"></div></article>
-    <article class="t span-3 half num-t"><h2>Tappe in calendario</h2><div class="big-num">${PA.upcoming().length}</div><p>da ${fmt.month(PA.upcoming()[0].start)} a ${fmt.month(PA.upcoming()[PA.upcoming().length-1].start)}</p></article>
-    <article class="t span-3 half num-t"><h2>Coach e ospiti</h2><div class="big-num">${D.coaches.length}</div><p>2 head coach in ogni tappa</p></article>
-    <article class="t span-6 quote-t"><h2>Dicono di noi</h2><p>“${esc(tq.text)}”</p><small>${esc(tq.name)}, ${esc(tq.who)}</small></article>
-    <article class="t dark span-6 row-2 club-t"><h2>Per le società</h2><p style="font-size:24px;line-height:1.2;font-weight:700;margin:12px 0">Iscrivi tutta la squadra in un’unica pratica e usa il codice SOCIETA10.</p><p style="color:#b7b0b1">Report tecnico per ogni atleta e Clinic allenatori inclusa per un tecnico.</p><button class="pa-btn" data-pa="register">Iscrivi la società</button></article>
-    <article class="t span-6 row-2 blog-t"><h2>Consigli dei coach</h2>${D.articles.map(a=>`<a href="#" onclick="PA.toast('Demo: articolo del blog');return false"><b>${esc(a.title)}</b><small>${esc(a.tag)} · ${a.min} min · ${esc(coach(a.coach).name)}</small></a>`).join('')}</article>
-    <article class="t span-8 spons-t">${D.sponsors.map(s=>`<span>${esc(s)}</span>`).join('')}</article>
-    <article class="t red span-4 news-t"><h2>${(()=>{const sn=PA.upcoming().find(e=>eventInfo(e).status==='soon');return sn?`Avvisami quando apre ${esc(sn.city)}`:'Avvisami alla prossima apertura'})()}</h2><form data-newsletter><input type="email" placeholder="Email" aria-label="Email"><button class="pa-btn is-sm" style="background:#1c1819;border-color:#1c1819">Avvisami</button></form></article>`;
-  countdown(n.startDate,v=>$('#cd').innerHTML=`<div><b>${v.days}</b>giorni</div><div><b>${pad(v.hours)}</b>ore</div><div><b>${pad(v.minutes)}</b>min</div><div><b>${pad(v.seconds)}</b>sec</div>`);
-  $('#mmap').innerHTML=italyMap({pinR:6});bindMap($('#mmap'));
-  $('[data-go-coach]').onclick=()=>go('coach');
-  $$('[data-cat]').forEach(b=>b.onclick=()=>{$('#fc').value=b.dataset.cat;go('tappe');drawCards()});
-
-  /* TAPPE */
-  let fstat='';
-  PA.regions().forEach(r=>$('#fr').insertAdjacentHTML('beforeend',`<option>${esc(r)}</option>`));
-  PA.months().forEach(m=>$('#fm').insertAdjacentHTML('beforeend',`<option value="${m.key}">${m.label}</option>`));
-  D.categories.forEach(c=>$('#fc').insertAdjacentHTML('beforeend',`<option value="${c.id}">${esc(c.label)}</option>`));
-  ['#fr','#fc','#fm'].forEach(s=>$(s).onchange=drawCards);
-  $$('#segStatus button').forEach(b=>b.onclick=()=>{fstat=b.dataset.s;$$('#segStatus button').forEach(x=>x.setAttribute('aria-pressed',x===b));drawCards()});
-  function drawCards(){
-    let list=filter({q:$('#q').value,region:$('#fr').value,category:$('#fc').value,month:$('#fm').value});
-    if(fstat==='open')list=list.filter(e=>['open','last'].includes(eventInfo(e).status));
-    if(fstat==='soldout')list=list.filter(e=>eventInfo(e).status==='soldout');
-    $('#cards').innerHTML=list.length?list.map(e=>{const s=eventInfo(e);return `<button class="t ecard link" data-pa="event" data-id="${e.id}">
-      <div class="head"><div class="datebox"><small>${fmt.mon3(e.start)}</small><b>${e.startDate.getDate()}–${e.endDate.getDate()}</b></div><span class="pa-badge is-${s.status}">${esc(s.label)}</span></div>
-      <div class="body"><h3>${esc(e.city)}</h3><p>${esc(e.venue)} · ${esc(e.pool)}</p>
-      <div class="slotsmini" aria-label="Riempimento fasce">${e.slots.map(sl=>`<i title="${esc(cat(sl.cat).label)} ${sl.start}" style="--h:${Math.round((1-PA.slotLeft(sl)/sl.cap)*100)}%"></i>`).join('')}</div>
-      <div class="foot"><span>${e.slots.length} fasce · ${e.coaches.length} coach</span><span>da <b>${eur(s.priceFrom)}</b></span></div></div></button>`}).join(''):`<div class="list-empty">Nessuna tappa con questi filtri.<br><button class="pa-link" id="clr">Mostra tutte le tappe</button></div>`;
-    const c=$('#clr');if(c)c.onclick=()=>{['#q','#fr','#fc','#fm'].forEach(s=>$(s).value='');drawCards()};
+  function paintCoaches() {
+    $('#coachrow').innerHTML = D.coaches.map(c => {
+      const ev = PA.upcoming().find(e => e.coaches.includes(c.id)) || PA.nextOpen();
+      return `<button class="ccard" data-pa="event" data-id="${ev ? ev.id : ''}" data-tab="coach">
+        ${avatar(c)}<h3>${esc(c.name)}</h3><p class="role">${esc(c.role)}</p><p>${esc(c.focus)}</p></button>`;
+    }).join('');
   }
-  drawCards();
 
-  /* CALENDARIO */
-  const TD=D.TODAY;
-  let cm=new Date(TD.getFullYear(),TD.getMonth(),1);
-  function drawCal(){
-    $('#calm').textContent=fmt.month(cm)+' '+cm.getFullYear();
-    const first=(cm.getDay()+6)%7,days=new Date(cm.getFullYear(),cm.getMonth()+1,0).getDate();
-    let h=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].map(d=>`<div class="dn">${d}</div>`).join('');
-    for(let i=0;i<first;i++)h+=`<div class="day out"></div>`;
-    for(let d=1;d<=days;d++){
-      const iso=`${cm.getFullYear()}-${String(cm.getMonth()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      const ev=D.events.find(e=>e.slots.some(s=>s.date===iso));
-      const today=iso===`${TD.getFullYear()}-${String(TD.getMonth()+1).padStart(2,'0')}-${String(TD.getDate()).padStart(2,'0')}`;
-      h+=ev?`<button class="day ev ${eventInfo(ev).status==='past'?'past':''} ${today?'today':''}" data-pa="event" data-id="${ev.id}"><span>${d}</span><small>${esc(ev.city)}</small></button>`:`<div class="day ${today?'today':''}">${d}</div>`;
+  function paintLanes() {
+    const list = PA.filter({ month: $('#f-mese').value, category: $('#f-cat').value });
+    $('#f-count').textContent = `${list.length} ${list.length === 1 ? 'tappa' : 'tappe'}`;
+    $('#lanes-live').textContent = `${list.length} ${list.length === 1 ? 'tappa trovata' : 'tappe trovate'}`;
+    $('#lanes').innerHTML = list.length ? list.map(e => {
+      const i = eventInfo(e);
+      return `<li class="lane"><button class="lane-btn" data-pa="event" data-id="${e.id}">
+        <span class="lane-date"><b>${e.startDate.getDate()}-${new Date(e.endDate).getDate()}</b>${esc(cap1(fmt.month(e.start)))} ${e.startDate.getFullYear()}</span>
+        <span class="lane-main">
+          <span class="lane-city">${esc(e.city)}</span>
+          <span class="lane-venue">${esc(e.venue)}. ${esc(e.pool)}</span>
+          <span class="fill"><i style="--w:${i.pct}%"></i></span>
+        </span>
+        <span class="lane-right"><span class="badge is-${i.status}">${esc(i.label)}</span><span class="lane-price">da <b>${eur(i.priceFrom)}</b></span></span>
+      </button></li>`;
+    }).join('') : `<li class="lane-empty">Nessuna tappa con questi filtri. <button class="link" id="f-reset">Mostra tutte le tappe</button></li>`;
+    const r = $('#f-reset');
+    if (r) r.onclick = () => { $('#f-mese').value = ''; $('#f-cat').value = ''; paintLanes(); };
+    $$('.pa-pin').forEach(p => p.style.opacity = list.some(e => e.id === p.dataset.event) ? 1 : .3);
+    $$('.lane-btn').forEach(b => b.addEventListener('mouseenter', () => {
+      $$('.pa-pin').forEach(p => p.classList.toggle('is-active', p.dataset.event === b.dataset.id));
+    }));
+  }
+
+  function skeleton() {
+    $('#lanes').innerHTML = [1, 2, 3, 4].map(() => '<li><div class="skel skel-lane"></div></li>').join('');
+  }
+
+  /* L'unica animazione non richiesta dall'utente: la corsia che si riempie
+     quando entra in vista. Mostra il dato, non decora. Niente comparse di
+     sezione, che sono rumore e lasciano la pagina vuota se lo script salta. */
+  let fillIO = null;
+  function animateFills(root) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+    if (!fillIO) fillIO = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const i = e.target, w = i.style.getPropertyValue('--w');
+      i.style.setProperty('--w', '0%');
+      requestAnimationFrame(() => requestAnimationFrame(() => i.style.setProperty('--w', w)));
+      fillIO.unobserve(i);
+    }), { rootMargin: '0px 0px -10%' });
+    $$('.fill > i', root || document).forEach(i => fillIO.observe(i));
+  }
+
+  async function start() {
+    skeleton();
+    try { await PA.load(); }
+    catch (err) {
+      $('#lanes').innerHTML = `<li class="lane-empty">Non riesco a caricare il calendario. <button class="link" id="f-retry">Riprova</button></li>`;
+      $('#f-retry').onclick = start; return;
     }
-    $('#grid7').innerHTML=h;
+    PA.months().forEach(m => $('#f-mese').insertAdjacentHTML('beforeend', `<option value="${m.key}">${esc(m.label)}</option>`));
+    D.categories.forEach(c => $('#f-cat').insertAdjacentHTML('beforeend', `<option value="${c.id}">${esc(c.label)}</option>`));
+    ['#f-mese', '#f-cat'].forEach(s => $(s).onchange = paintLanes);
+    $('#map').innerHTML = italyMap(); bindMap($('#map'));
+    paintNext(); paintCoaches(); paintLanes(); animateFills();
+    const h = location.hash.match(/evento=([\w-]+)/);
+    if (h) setTimeout(() => PA.openEvent(h[1]), 250);
   }
-  $('#cprev').onclick=()=>{cm=new Date(cm.getFullYear(),cm.getMonth()-1,1);drawCal()};
-  $('#cnext').onclick=()=>{cm=new Date(cm.getFullYear(),cm.getMonth()+1,1);drawCal()};
-  drawCal();
-  $('#agenda').innerHTML=PA.upcoming().map(e=>`<button data-pa="event" data-id="${e.id}"><b>${e.startDate.getDate()}<small>${fmt.mon3(e.start)}</small></b><span>${esc(e.city)}<small>${esc(eventInfo(e).label)}</small></span></button>`).join('');
 
-  /* COACH */
-  $('#coachgrid').innerHTML=D.coaches.map(c=>{const ev=PA.upcoming().find(e=>e.coaches.includes(c.id));return `<article class="t ccard link" data-pa="event" data-id="${ev?ev.id:n.id}" data-tab="coach">${avatar(c)}<h3>${esc(c.name)}</h3><p>${esc(c.focus)}</p><div class="st">${c.stats.map(([k,v])=>`<span>${esc(k)} <b>${esc(v)}</b></span>`).join('')}</div></article>`}).join('');
+  /* dopo un'iscrizione la pagina si aggiorna: i posti sono cambiati */
+  document.addEventListener('pa:registered', async () => {
+    try { await PA.load(true); paintNext(); paintLanes(); animateFills(); $('#map').innerHTML = italyMap(); bindMap($('#map')); } catch (e) { }
+  });
 
-  /* PROFILO */
-  function drawMine(){
-    const rs=store.all();
-    $('#myregs').innerHTML=`<h2>I tuoi pass</h2>`+(rs.length?rs.map(r=>{const e=D.events.find(x=>x.id===r.eventId);return `<div style="display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)">${qr(r.code,84)}<div><b style="font-size:20px">${esc(e.city)}</b><br><span style="color:var(--mute);font-size:14px">${fmt.range(e)} · ${esc(r.athlete)}<br>${r.code} · ${esc(r.status)}</span></div></div>`}).join(''):'<p>Nessuna iscrizione.</p>')+`<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="pa-btn" data-pa="account">Documenti e foto</button><button class="pa-btn is-ghost" data-pa="register">Nuova iscrizione</button></div>`;
-  }
-  $('#faq').innerHTML=faqHtml();bindFaq($('#faq'));
-  document.addEventListener('pa:registered',()=>drawMine());
-
-  const hv=location.hash.match(/v=(\w+)/);go(hv?hv[1]:'home');
+  start();
 })();
 </script>
 </body>

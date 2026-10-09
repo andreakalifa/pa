@@ -2,186 +2,295 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Premium Academy Experience · Pannello organizzatori</title>
-<link rel="icon" href="../assets/img/mark.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,800..900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070d10">
+<title>Pannello organizzatori · Premium Academy Experience</title>
+<meta name="description" content="Panoramica delle tappe, gestione delle fasce, elenco iscritti, check-in con QR e comunicazioni.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64">
+<link rel="preload" href="../assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/core.css">
 <style>
-:root{--bg:#f3f2f2;--card:#fff;--ink:#1c1819;--g:#242021;--red:#d70e20;--mute:#7a7374;--line:#e6e2e2;--pa-radius:16px;--pa-btn-radius:10px}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 'Archivo',system-ui,sans-serif}
-.shell{display:grid;grid-template-columns:232px 1fr;min-height:100dvh}
-aside{background:var(--g);color:#fff;padding:22px 14px;position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:4px;width:230px}
-aside img{width:176px;margin:4px 8px 26px;display:block}
-aside button{display:block;width:100%;text-align:left;background:none;border:0;color:#bdb6b7;font:600 14px 'Archivo';padding:11px 12px;border-radius:10px;cursor:pointer}
-aside button[aria-current]{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 3px 0 0 var(--red)}
-aside .foot{margin-top:auto;font-size:12px;color:#8f8889;padding:8px}
-aside .foot a{color:#fff}
-main{padding:24px 28px 60px;min-width:0}
-h1{font:900 italic 30px 'Archivo';font-stretch:110%;margin:0;text-transform:uppercase;letter-spacing:-.01em}
-.head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
-.head .r{display:flex;gap:8px;flex-wrap:wrap}
-.card{background:var(--card);border-radius:16px;padding:20px;border:1px solid var(--line)}
-.card h2{margin:0 0 14px;font-size:16px;font-weight:700}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
-.kpi small{color:var(--mute);font-weight:600}
-.kpi b{display:block;font:900 italic 34px/1.1 'Archivo';font-stretch:105%;font-variant-numeric:tabular-nums}
-.kpi span{font-size:13px;color:#0f7a3a;font-weight:600}
-.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:12px}
-.bars{display:grid;gap:10px}
-.bars div{display:grid;grid-template-columns:90px 1fr 50px;gap:10px;align-items:center;font-size:14px}
-.bars i{height:12px;border-radius:6px;background:var(--line);position:relative;overflow:hidden}
-.bars i::after{content:'';position:absolute;inset:0;width:var(--w);background:var(--red);border-radius:6px}
-.bars em{font-style:normal;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th{text-align:left;color:var(--mute);font-weight:600;font-size:12px;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
-tr:last-child td{border:0}
-.tw{overflow-x:auto}
-td input[type=number]{width:70px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit}
-.view{display:none}.view.is-on{display:block}
-.tools{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.tools input,.tools select,.form input,.form select,.form textarea{padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:500 14px 'Archivo';background:#fff;min-width:0}
-.tools input{flex:1 1 220px}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form label{display:grid;gap:5px;font-size:13px;font-weight:600;color:var(--mute)}
-.form .full{grid-column:1 / -1}
-.chk{display:flex;align-items:center;gap:6px;color:var(--ink)!important}
-.scan{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start}
-.cam{aspect-ratio:1;border-radius:16px;background:#1c1819;position:relative;overflow:hidden;display:grid;place-items:center;color:#fff;font-size:13px}
-.cam::before{content:'';position:absolute;inset:18%;border:3px solid var(--red);border-radius:14px}
-.cam::after{content:'';position:absolute;left:18%;right:18%;height:2px;background:var(--red);top:20%;animation:sc 2s ease-in-out infinite alternate;box-shadow:0 0 12px var(--red)}
-@keyframes sc{to{top:80%}}
-.log li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
-.log{list-style:none;padding:0;margin:14px 0 0}
-.pill{font-size:12px;font-weight:700;padding:4px 8px;border-radius:999px;background:#eef8f2;color:#0f7a3a;white-space:nowrap}
-.pill.w{background:#fff3e3;color:#b35c00}.pill.g{background:var(--bg);color:var(--mute)}
-@media (max-width:1000px){.kpis{grid-template-columns:1fr 1fr}.grid2,.scan{grid-template-columns:1fr}}
-@media (max-width:760px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:10px}aside img,aside .foot{display:none}aside button{white-space:nowrap;width:auto}main{padding:16px}.form{grid-template-columns:1fr}}
+.shell { display: grid; grid-template-columns: 248px 1fr; min-height: 100dvh; }
+.card { min-width: 0; }
+.side { min-width: 0; position: sticky; top: 0; height: 100dvh; padding: 22px 14px; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid var(--line); background: var(--ink-surface); }
+.side img { width: 178px; margin: 2px 8px 26px; }
+.side button { display: block; width: 100%; min-height: 44px; padding: 11px 14px; border: 0; border-radius: var(--r-s); background: none; color: var(--foam-2); font-weight: 600; font-size: 15px; text-align: left; cursor: pointer; }
+.side button:hover { background: var(--ink-raised); color: var(--foam); }
+.side button[aria-current] { background: var(--ink-raised); color: var(--foam); box-shadow: inset 3px 0 0 var(--red); }
+.side .bottom { margin-top: auto; padding: 14px 10px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--foam-3); }
+.side .bottom a { color: var(--foam-2); }
+main { padding: 26px clamp(18px, 3vw, 34px) 60px; min-width: 0; }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 22px; }
+.head h1 { margin: 0; font-size: clamp(27px, 3vw, 36px); font-weight: 800; letter-spacing: -.025em; }
+.card { background: var(--ink-surface); border: 1px solid var(--line); border-radius: var(--r-m); padding: 22px; }
+.card h2 { margin: 0 0 16px; font-size: 14px; font-weight: 700; color: var(--foam-2); letter-spacing: .07em; text-transform: uppercase; font-variation-settings: 'wdth' 88; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+.kpi b { display: block; margin: 6px 0 4px; font: 600 clamp(26px, 2.6vw, 34px)/1 var(--f-mono); font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+.kpi small { color: var(--foam-2); font-size: 13px; }
+.kpi .delta { color: var(--go); font-size: 13px; font-weight: 600; }
+.g2 { display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; margin-bottom: 12px; }
+.bars { display: grid; gap: 11px; }
+.bars div { display: grid; grid-template-columns: 94px 1fr 52px; gap: 12px; align-items: center; font-size: 14px; }
+.bars em { font-style: normal; text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); color: var(--foam-2); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; font-variation-settings: 'wdth' 88; }
+td { padding: 12px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.tw { overflow-x: auto; }
+.view { display: none; }
+.view.is-on { display: block; }
+.tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.tools input, .tools select { min-height: 44px; padding: 11px 14px; background: var(--ink); color: var(--foam); border: 1px solid var(--line-strong); border-radius: var(--r-s); font-size: 15px; }
+.tools input { flex: 1 1 240px; }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.form .span-all { grid-column: 1 / -1; }
+.form textarea { min-height: 96px; resize: vertical; }
+.scan { display: grid; grid-template-columns: 260px 1fr; gap: 26px; align-items: start; }
+.cam { aspect-ratio: 1; border-radius: var(--r-m); background: var(--ink); border: 1px solid var(--line); position: relative; overflow: hidden; display: grid; place-items: center; color: var(--foam-2); font-size: 14px; }
+.cam::before { content: ''; position: absolute; inset: 17%; border: 2px solid var(--red); border-radius: var(--r-s); }
+.cam::after { content: ''; position: absolute; left: 17%; right: 17%; top: 20%; height: 2px; background: var(--red-bright); animation: scan 2.4s ease-in-out infinite alternate; }
+@keyframes scan { to { top: 80% } }
+.log { list-style: none; margin: 18px 0 0; padding: 0; }
+.log li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+.log b { display: block; }
+.log small { color: var(--foam-2); }
+@media (max-width: 1040px) { .kpis { grid-template-columns: 1fr 1fr; } .g2, .scan { grid-template-columns: 1fr; } }
+@media (max-width: 860px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { position: static; height: auto; width: auto; flex-direction: row; overflow-x: auto; padding: 10px 12px; border-right: 0; border-bottom: 1px solid var(--line); gap: 6px; scrollbar-width: none; }
+  .side::-webkit-scrollbar { display: none; }
+  .side img, .side .bottom { display: none; }
+  .side button { width: auto; white-space: nowrap; padding: 11px 16px; }
+  .side button[aria-current] { box-shadow: none; background: var(--red); color: #fff; }
+  main { padding: 18px 16px 50px; }
+  .form { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#admin-main">Vai al contenuto</a>
 <div class="shell">
-  <aside>
-    <img src="../assets/img/logo-light.png" alt="Premium Academy Experience">
+  <nav class="side" aria-label="Sezioni del pannello">
+    <img src="../assets/img/logo-light.png" alt="Premium Academy Experience" width="178" height="47">
     <button data-v="dash" aria-current="page">Panoramica</button>
-    <button data-v="eventi">Eventi e fasce</button>
+    <button data-v="fasce">Eventi e fasce</button>
     <button data-v="nuovo">Nuovo evento</button>
     <button data-v="iscritti">Iscritti</button>
-    <button data-v="checkin">Check-in QR</button>
+    <button data-v="checkin">Check-in</button>
     <button data-v="comunica">Comunicazioni</button>
-    <div class="foot">Demo senza backend: i dati sono di esempio.<br><a href="../index.html">← Torna al sito</a></div>
-  </aside>
-  <main>
+    <div class="bottom">Prototipo senza backend: i dati sono di esempio.<br><a href="../index.html">Torna al sito</a></div>
+  </nav>
+
+  <main id="admin-main">
     <section class="view is-on" data-view="dash">
-      <div class="head"><h1>Panoramica</h1><div class="r"><button class="pa-btn is-sm" data-goto="nuovo">Crea evento</button></div></div>
+      <div class="head"><h1>Panoramica</h1><button class="btn sm" data-goto="nuovo">Crea un evento</button></div>
       <div class="kpis" id="kpis"></div>
-      <div class="grid2">
+      <div class="g2">
         <div class="card"><h2>Riempimento per tappa</h2><div class="bars" id="bars"></div></div>
         <div class="card"><h2>Ultime iscrizioni</h2><div class="tw"><table id="last"></table></div></div>
       </div>
       <div class="card"><h2>Fasce quasi piene</h2><div class="tw"><table id="hot"></table></div></div>
     </section>
 
-    <section class="view" data-view="eventi">
-      <div class="head"><h1>Eventi e fasce</h1><div class="r"><select id="evsel" class="pa-btn is-ghost is-sm" aria-label="Evento"></select></div></div>
+    <section class="view" data-view="fasce">
+      <div class="head"><h1>Eventi e fasce</h1>
+        <label class="sr" for="evsel">Evento</label>
+        <select id="evsel" class="tools" style="min-height:44px;padding:11px 14px;background:var(--ink-surface);color:var(--foam);border:1px solid var(--line-strong);border-radius:var(--r-s)"></select>
+      </div>
       <div class="card"><div class="tw"><table id="slots"></table></div></div>
     </section>
 
     <section class="view" data-view="nuovo">
       <div class="head"><h1>Nuovo evento</h1></div>
       <form class="card form" id="newev">
-        <label>Città<input required name="city" placeholder="Es. Genova"></label>
-        <label>Regione<input required name="region" placeholder="Es. Liguria"></label>
-        <label>Struttura<input required name="venue" placeholder="Nome piscina"></label>
-        <label>Vasca<select name="pool"><option>Vasca 25 m</option><option>Vasca 50 m</option></select></label>
-        <label>Data inizio<input type="date" required name="start"></label>
-        <label>Apertura iscrizioni<input type="date" name="opens"></label>
-        <label class="full">Coach<span style="display:flex;gap:14px;flex-wrap:wrap" id="coachchk"></span></label>
-        <label class="full">Fasce<span class="chk"><input type="checkbox" checked> Usa il modello standard (7 fasce, sabato e domenica)</span></label>
-        <label class="full">Note per i partecipanti<textarea name="note" rows="3" placeholder="Parcheggio, hotel convenzionati, cosa portare"></textarea></label>
-        <div class="full"><button class="pa-btn">Pubblica evento</button></div>
+        <label class="field"><span>Città</span><input required name="city" placeholder="Es. Genova"></label>
+        <label class="field"><span>Regione</span><input required name="region" placeholder="Es. Liguria"></label>
+        <label class="field"><span>Struttura</span><input required name="venue" placeholder="Nome della piscina"></label>
+        <label class="field"><span>Vasca</span><select name="pool"><option>Vasca 25 m</option><option>Vasca 50 m</option></select></label>
+        <label class="field"><span>Primo giorno</span><input type="date" lang="it" required name="start"></label>
+        <label class="field"><span>Apertura iscrizioni</span><input type="date" lang="it" name="opens"></label>
+        <fieldset class="field span-all" style="border:0;padding:0;margin:0 0 16px"><legend style="font-size:13px;font-weight:600;color:var(--foam-2);padding:0 0 7px">Coach presenti</legend>
+          <div style="display:flex;gap:16px;flex-wrap:wrap" id="coachchk"></div></fieldset>
+        <label class="check span-all"><input type="checkbox" checked name="tpl"> <span>Usa il modello standard: 7 fasce su sabato e domenica</span></label>
+        <label class="field span-all"><span>Note per i partecipanti</span><textarea name="note" placeholder="Parcheggio, hotel convenzionati, indicazioni particolari"></textarea></label>
+        <div class="span-all"><button class="btn">Pubblica l'evento</button></div>
       </form>
     </section>
 
     <section class="view" data-view="iscritti">
-      <div class="head"><h1>Iscritti</h1><div class="r"><button class="pa-btn is-sm" id="csv">Esporta CSV</button></div></div>
-      <div class="tools"><input id="sq" placeholder="Cerca atleta, società o codice" aria-label="Cerca"><select id="se" aria-label="Evento"><option value="">Tutti gli eventi</option></select></div>
-      <div class="card"><div class="tw"><table id="regs"></table></div></div>
+      <div class="head"><h1>Iscritti</h1><button class="btn sm" id="csv">Esporta in CSV</button></div>
+      <div class="tools">
+        <label class="sr" for="sq">Cerca</label>
+        <input id="sq" type="search" placeholder="Cerca atleta, società o codice">
+        <label class="sr" for="se">Evento</label>
+        <select id="se"><option value="">Tutti gli eventi</option></select>
+      </div>
+      <div class="card"><div class="tw"><table id="regs"></table></div><p class="sr" role="status" aria-live="polite" id="regs-live"></p></div>
     </section>
 
     <section class="view" data-view="checkin">
       <div class="head"><h1>Check-in</h1></div>
       <div class="card scan">
-        <div class="cam">Inquadra il QR</div>
-        <div><h2>Oppure inserisci il codice</h2><form class="tools" id="ci"><input placeholder="PA-XXXX" aria-label="Codice iscrizione"><button class="pa-btn is-sm">Registra ingresso</button></form><p style="color:var(--mute);margin:0">Prova con uno dei codici della tabella iscritti.</p><ul class="log" id="log"></ul></div>
+        <div class="cam">Inquadra il QR del pass</div>
+        <div>
+          <h2 style="margin-top:0">Oppure digita il codice</h2>
+          <form class="tools" id="ci"><label class="sr" for="cicode">Codice del pass</label><input id="cicode" placeholder="PA-XXXX" autocomplete="off"><button class="btn">Registra l'ingresso</button></form>
+          <p class="muted" style="font-size:14px;margin:0">Prova con uno dei codici che trovi nella tabella degli iscritti.</p>
+          <ul class="log" id="log"></ul>
+        </div>
       </div>
     </section>
 
     <section class="view" data-view="comunica">
       <div class="head"><h1>Comunicazioni</h1></div>
       <form class="card form" id="msg">
-        <label>Destinatari<select id="to"></select></label>
-        <label>Canale<select><option>Email</option><option>WhatsApp (broadcast)</option><option>SMS</option></select></label>
-        <label class="full">Oggetto<input value="Promemoria: check-in 30 minuti prima della fascia"></label>
-        <label class="full">Messaggio<textarea rows="6">Ciao! Ti ricordiamo che il check-in apre 30 minuti prima della tua fascia. Porta costume, cuffia, occhialini e il QR dell’iscrizione. A presto in vasca!</textarea></label>
-        <div class="full"><button class="pa-btn">Invia</button></div>
+        <label class="field"><span>Destinatari</span><select id="to"></select></label>
+        <label class="field"><span>Canale</span><select><option>Email</option><option>WhatsApp</option><option>SMS</option></select></label>
+        <label class="field span-all"><span>Oggetto</span><input value="Promemoria: check-in 30 minuti prima della fascia"></label>
+        <label class="field span-all"><span>Messaggio</span><textarea rows="6">Ciao, ti ricordiamo che il check-in apre 30 minuti prima della tua fascia. Porta costume, cuffia, occhialini e il QR dell'iscrizione. A presto in vasca.</textarea></label>
+        <div class="span-all"><button class="btn">Invia</button></div>
       </form>
     </section>
   </main>
 </div>
-<script>window.PA_BASE='../'</script>
+
 <script src="../assets/js/data.js"></script>
+<script src="../assets/js/api.js"></script>
 <script src="../assets/js/core.js"></script>
 <script>
-(function(){
-  const {D,$,$$,esc,fmt,eur,cat,coach,eventInfo,slotLeft,toast,store}=PA;
-  const go=v=>{$$('.view').forEach(s=>s.classList.toggle('is-on',s.dataset.view===v));$$('aside button').forEach(b=>b.dataset.v===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'))};
-  $$('[data-v]').forEach(b=>b.onclick=()=>go(b.dataset.v));$$('[data-goto]').forEach(b=>b.onclick=()=>go(b.dataset.goto));
+(function () {
+  const { D, $, $$, esc, cap1, fmt, eur, cat, eventInfo, slotLeft, toast } = PA;
 
-  // iscritti fittizi generati dai posti occupati
-  const nomi=['Tommaso','Giulia','Matteo','Sofia','Leonardo','Aurora','Francesco','Alice','Lorenzo','Emma','Riccardo','Ginevra','Davide','Chiara','Pietro'];
-  const cogn=['Rossi','Bianchi','Romano','Colombo','Ricci','Marino','Greco','Bruno','Gallo','Conti','De Luca','Costa','Fontana','Esposito'];
-  const soc=['Nuoto Club Roma','Aquatica Milano','Rari Nantes Napoli','Firenze Nuoto','Swim Team Bari','—'];
-  let k=7;const rnd=()=>(k=(k*9301+49297)%233280)/233280;
-  const regs=[];
-  PA.upcoming().forEach(e=>e.slots.forEach(s=>{for(let i=0;i<Math.min(s.taken,4);i++){regs.push({code:'PA-'+Math.floor(rnd()*46656).toString(36).toUpperCase().padStart(4,'0'),athlete:nomi[rnd()*nomi.length|0]+' '+cogn[rnd()*cogn.length|0],society:soc[rnd()*soc.length|0],eventId:e.id,slotId:s.id,paid:s.price,status:rnd()>.1?'confermata':'certificato mancante',checked:false})}}));
-  store.all().forEach(r=>r.slotIds.forEach(id=>regs.unshift({code:r.code,athlete:r.athlete,society:'—',eventId:r.eventId,slotId:id,paid:r.total/r.slotIds.length,status:r.waitlist?'lista d’attesa':'confermata',checked:false})));
+  const go = v => {
+    $$('.view').forEach(s => s.classList.toggle('is-on', s.dataset.view === v));
+    $$('.side button').forEach(b => b.dataset.v === v ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+    window.scrollTo(0, 0);
+  };
+  $$('[data-v]').forEach(b => b.onclick = () => go(b.dataset.v));
+  $$('[data-goto]').forEach(b => b.onclick = () => go(b.dataset.goto));
 
-  const up=PA.upcoming();
-  const tot=up.reduce((a,e)=>a+e.slots.reduce((b,s)=>b+s.cap-slotLeft(s),0),0);
-  const cash=up.reduce((a,e)=>a+e.slots.reduce((b,s)=>b+(s.cap-slotLeft(s))*s.price,0),0);
-  const cap=up.reduce((a,e)=>a+e.slots.reduce((b,s)=>b+s.cap,0),0);
-  $('#kpis').innerHTML=[['Iscritti stagione',tot,'+42 questa settimana'],['Incassato',eur(cash),'+'+eur(2310)+' in 7 giorni'],['Riempimento medio',Math.round(tot/cap*100)+'%','Bari sold out'],['Lista d’attesa',38,'12 su Napoli']].map(([a,b,c])=>`<div class="card kpi"><small>${a}</small><b>${b}</b><span>${c}</span></div>`).join('');
-  $('#bars').innerHTML=up.map(e=>{const i=eventInfo(e);return `<div><span>${esc(e.city)}</span><i style="--w:${i.pct}%"></i><em>${i.pct}%</em></div>`}).join('');
-  const ev=id=>D.events.find(e=>e.id===id),sl=(e,id)=>e.slots.find(s=>s.id===id);
-  $('#last').innerHTML=`<tr><th>Atleta</th><th>Tappa</th><th>Stato</th></tr>`+regs.slice(0,6).map(r=>`<tr><td>${esc(r.athlete)}</td><td>${esc(ev(r.eventId).city)}</td><td><span class="pill ${r.status==='confermata'?'':'w'}">${esc(r.status)}</span></td></tr>`).join('');
-  const hot=up.flatMap(e=>e.slots.map(s=>({e,s,l:slotLeft(s)}))).filter(x=>x.l>0&&x.l<=4).slice(0,8);
-  $('#hot').innerHTML=`<tr><th>Tappa</th><th>Fascia</th><th>Categoria</th><th>Posti</th></tr>`+hot.map(x=>`<tr><td>${esc(x.e.city)}</td><td>${fmt.weekday(x.s.date).slice(0,3)} ${x.s.start}</td><td>${esc(cat(x.s.cat).label)}</td><td><span class="pill w">${x.l} rimasti</span></td></tr>`).join('');
+  const NOMI = ['Tommaso', 'Giulia', 'Matteo', 'Sofia', 'Leonardo', 'Aurora', 'Francesco', 'Alice', 'Lorenzo', 'Emma', 'Riccardo', 'Ginevra', 'Davide', 'Chiara', 'Pietro', 'Nour', 'Samuele', 'Yara'];
+  const COGN = ['Rossi', 'Bianchi', 'Romano', 'Colombo', 'Ricci', 'Marino', 'Greco', 'Bruno', 'Gallo', 'Conti', 'De Luca', 'Costa', 'Fontana', 'Esposito', 'El Amrani', 'Nguyen'];
+  const SOC = ['Nuoto Club Roma', 'Aquatica Milano', 'Rari Nantes Napoli', 'Firenze Nuoto', 'Swim Team Bari', 'Nessuna'];
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  let regs = [];
 
-  $('#evsel').innerHTML=D.events.map(e=>`<option value="${e.id}">${esc(e.city)} · ${fmt.rangeShort(e)}</option>`).join('');
-  function drawSlots(){const e=ev($('#evsel').value);$('#slots').innerHTML=`<tr><th>Giorno</th><th>Orario</th><th>Categoria</th><th>Focus</th><th>Capienza</th><th>Occupati</th><th>Quota</th><th></th></tr>`+e.slots.map(s=>`<tr><td style="text-transform:capitalize">${fmt.weekday(s.date)}</td><td>${s.start}–${s.end}</td><td>${esc(cat(s.cat).label)}</td><td>${esc(s.focus)}</td><td><input type="number" value="${s.cap}" min="1" aria-label="Capienza"></td><td>${s.cap-slotLeft(s)}</td><td>${eur(s.price)}</td><td><button class="pa-link" onclick="PA.toast('Fascia salvata')">Salva</button></td></tr>`).join('')}
-  $('#evsel').onchange=drawSlots;drawSlots();
+  function buildRegs() {
+    regs = [];
+    PA.upcoming().forEach(e => e.slots.forEach(s => {
+      const taken = s.cap - slotLeft(s);
+      for (let i = 0; i < Math.min(taken, 4); i++) {
+        regs.push({
+          code: 'PA-' + Math.floor(rnd() * 46656).toString(36).toUpperCase().padStart(4, '0'),
+          athlete: NOMI[rnd() * NOMI.length | 0] + ' ' + COGN[rnd() * COGN.length | 0],
+          society: SOC[rnd() * SOC.length | 0],
+          eventId: e.id, slotId: s.id, paid: s.price,
+          status: rnd() > .12 ? 'confermata' : 'certificato mancante', checked: false
+        });
+      }
+    }));
+  }
 
-  $('#coachchk').innerHTML=D.coaches.map(c=>`<span class="chk"><input type="checkbox" ${['calvi','orsi'].includes(c.id)?'checked':''}> ${esc(c.name)}</span>`).join('');
-  $('#newev').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);toast(`Evento ${f.get('city')} pubblicato con 7 fasce`);e.target.reset();};
+  const ev = id => PA.byId(id);
+  const sl = id => PA.slotById(id);
 
-  D.events.forEach(e=>$('#se').insertAdjacentHTML('beforeend',`<option value="${e.id}">${esc(e.city)}</option>`));
-  let view=[];
-  function drawRegs(){const q=$('#sq').value.toLowerCase(),f=$('#se').value;view=regs.filter(r=>(!f||r.eventId===f)&&(!q||(r.athlete+r.society+r.code).toLowerCase().includes(q)));
-    $('#regs').innerHTML=`<tr><th>Codice</th><th>Atleta</th><th>Società</th><th>Tappa</th><th>Fascia</th><th>Quota</th><th>Stato</th><th>Ingresso</th></tr>`+view.slice(0,80).map(r=>{const e=ev(r.eventId),s=sl(e,r.slotId);return `<tr><td><code>${r.code}</code></td><td>${esc(r.athlete)}</td><td>${esc(r.society)}</td><td>${esc(e.city)}</td><td>${s?fmt.weekday(s.date).slice(0,3)+' '+s.start+' '+cat(s.cat).label:''}</td><td>${eur(Math.round(r.paid))}</td><td><span class="pill ${r.status==='confermata'?'':'w'}">${esc(r.status)}</span></td><td>${r.checked?'<span class="pill">entrato</span>':'<span class="pill g">—</span>'}</td></tr>`}).join('')}
-  ['#sq','#se'].forEach(s=>$(s).addEventListener('input',drawRegs));drawRegs();
-  $('#csv').onclick=()=>{const rows=[['codice','atleta','societa','tappa','fascia','quota','stato']].concat(view.map(r=>{const e=ev(r.eventId),s=sl(e,r.slotId);return [r.code,r.athlete,r.society,e.city,s?s.date+' '+s.start+' '+cat(s.cat).label:'',Math.round(r.paid),r.status]}));
-    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(';')).join('\n')],{type:'text/csv'}));a.download='iscritti-premium-academy.csv';a.click()};
+  function paint() {
+    const up = PA.upcoming();
+    const tot = regs.length;
+    const cash = regs.filter(r => r.status === 'confermata').reduce((n, r) => n + r.paid, 0);
+    const cap = up.reduce((a, e) => a + e.slots.reduce((b, s) => b + s.cap, 0), 0);
+    const occ = up.reduce((a, e) => a + e.slots.reduce((b, s) => b + (s.cap - slotLeft(s)), 0), 0);
+    const sold = up.filter(e => eventInfo(e).status === 'soldout').map(e => e.city);
 
-  $('#ci').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input'),c=i.value.trim().toUpperCase(),r=regs.find(x=>x.code===c);
-    if(!r){toast('Codice non trovato. Controlla le lettere o cerca l’atleta in Iscritti');return}
-    r.checked=true;$('#log').insertAdjacentHTML('afterbegin',`<li><span><b>${esc(r.athlete)}</b><br><small>${esc(ev(r.eventId).city)} · ${c}</small></span><span class="pill ${r.status==='confermata'?'':'w'}">${r.status==='confermata'?'Ingresso ok':'Verifica certificato'}</span></li>`);i.value='';drawRegs()};
+    $('#kpis').innerHTML = [
+      ['Iscritti in stagione', tot, '+42 questa settimana'],
+      ['Incassato', eur(cash), '+' + eur(2310) + ' in 7 giorni'],
+      ['Riempimento medio', Math.round(occ / cap * 100) + '%', sold.length ? sold.join(' e ') + ' al completo' : 'nessuna tappa esaurita'],
+      ['In lista d’attesa', 38, '12 su ' + (up.find(e => eventInfo(e).status === 'last') || up[0]).city]
+    ].map(([a, b, c]) => `<div class="card kpi"><small>${esc(a)}</small><b>${esc(String(b))}</b><span class="delta">${esc(c)}</span></div>`).join('');
 
-  $('#to').innerHTML=D.events.filter(e=>eventInfo(e).status!=='past').map(e=>`<option>Iscritti ${esc(e.city)} (${e.slots.reduce((a,s)=>a+s.cap-slotLeft(s),0)})</option>`).join('')+'<option>Lista d’attesa</option><option>Newsletter</option>';
-  $('#msg').onsubmit=e=>{e.preventDefault();toast('Messaggio in coda di invio')};
+    $('#bars').innerHTML = up.map(e => { const i = eventInfo(e); return `<div><span>${esc(e.city)}</span><span class="fill"><i style="--w:${i.pct}%"></i></span><em>${i.pct}%</em></div>`; }).join('');
+
+    $('#last').innerHTML = `<tr><th scope="col">Atleta</th><th scope="col">Tappa</th><th scope="col">Stato</th></tr>`
+      + regs.slice(0, 6).map(r => `<tr><td>${esc(r.athlete)}</td><td>${esc(ev(r.eventId).city)}</td><td><span class="badge ${r.status === 'confermata' ? 'is-open' : 'is-last'}">${esc(r.status)}</span></td></tr>`).join('');
+
+    const hot = up.flatMap(e => e.slots.map(s => ({ e, s, l: slotLeft(s) }))).filter(x => x.l > 0 && x.l <= 4).slice(0, 8);
+    $('#hot').innerHTML = `<tr><th scope="col">Tappa</th><th scope="col">Fascia</th><th scope="col">Categoria</th><th scope="col">Posti</th></tr>`
+      + (hot.length ? hot.map(x => `<tr><td>${esc(x.e.city)}</td><td class="num">${cap1(fmt.wd3(x.s.date))} ${x.s.start}</td><td>${esc(cat(x.s.cat).label)}</td><td><span class="badge is-last">${x.l} ${x.l === 1 ? 'posto rimasto' : 'posti rimasti'}</span></td></tr>`).join('')
+        : `<tr><td colspan="4" class="muted">Nessuna fascia sotto i cinque posti.</td></tr>`);
+
+    $('#evsel').innerHTML = PA.events().map(e => `<option value="${e.id}">${esc(e.city)}, ${fmt.rangeShort(e)}</option>`).join('');
+    $('#se').innerHTML = '<option value="">Tutti gli eventi</option>' + PA.events().map(e => `<option value="${e.id}">${esc(e.city)}</option>`).join('');
+    $('#coachchk').innerHTML = D.coaches.map(c => `<label class="check" style="margin:0"><input type="checkbox" ${['calvi', 'orsi'].includes(c.id) ? 'checked' : ''}> <span>${esc(c.name)}</span></label>`).join('');
+    $('#to').innerHTML = up.map(e => `<option>Iscritti di ${esc(e.city)}, ${e.slots.reduce((a, s) => a + s.cap - slotLeft(s), 0)} persone</option>`).join('')
+      + '<option>Lista d’attesa</option><option>Chi ha chiesto di essere avvisato</option>';
+    drawSlots(); drawRegs();
+  }
+
+  function drawSlots() {
+    const e = ev($('#evsel').value); if (!e) return;
+    $('#slots').innerHTML = `<tr><th scope="col">Giorno</th><th scope="col">Orario</th><th scope="col">Categoria</th><th scope="col">Focus</th><th scope="col">Capienza</th><th scope="col">Occupati</th><th scope="col">Quota</th><th scope="col"><span class="sr">Azioni</span></th></tr>`
+      + e.slots.map(s => `<tr>
+        <td>${cap1(fmt.weekday(s.date))}</td>
+        <td class="num">${s.start} ${s.end}</td>
+        <td>${esc(cat(s.cat).label)}</td>
+        <td class="muted">${esc(s.focus)}</td>
+        <td><label class="sr" for="cap-${s.id}">Capienza di ${cat(s.cat).label}</label><input id="cap-${s.id}" type="number" min="1" value="${s.cap}" style="width:76px;min-height:40px;padding:7px 9px;background:var(--ink);color:var(--foam);border:1px solid var(--line-strong);border-radius:var(--r-s)"></td>
+        <td class="num">${s.cap - slotLeft(s)}</td>
+        <td class="num">${eur(s.price)}</td>
+        <td><button class="link" data-save>Salva</button></td></tr>`).join('');
+    $$('[data-save]', $('#slots')).forEach(b => b.onclick = () => toast('Fascia salvata'));
+  }
+  $('#evsel').onchange = drawSlots;
+
+  let view = [];
+  function drawRegs() {
+    const q = $('#sq').value.toLowerCase().trim(), f = $('#se').value;
+    view = regs.filter(r => (!f || r.eventId === f) && (!q || (r.athlete + r.society + r.code).toLowerCase().includes(q)));
+    $('#regs-live').textContent = `${view.length} ${view.length === 1 ? 'iscritto trovato' : 'iscritti trovati'}`;
+    $('#regs').innerHTML = `<tr><th scope="col">Codice</th><th scope="col">Atleta</th><th scope="col">Società</th><th scope="col">Tappa</th><th scope="col">Fascia</th><th scope="col">Quota</th><th scope="col">Stato</th><th scope="col">Ingresso</th></tr>`
+      + (view.length ? view.slice(0, 80).map(r => {
+        const e = ev(r.eventId), s = sl(r.slotId);
+        return `<tr><td class="num">${esc(r.code)}</td><td>${esc(r.athlete)}</td><td class="muted">${esc(r.society)}</td><td>${esc(e.city)}</td>
+          <td class="num">${s ? cap1(fmt.wd3(s.date)) + ' ' + s.start : ''}</td><td class="num">${eur(r.paid)}</td>
+          <td><span class="badge ${r.status === 'confermata' ? 'is-open' : 'is-last'}">${esc(r.status)}</span></td>
+          <td>${r.checked ? '<span class="badge is-open">entrato</span>' : '<span class="muted">non ancora</span>'}</td></tr>`;
+      }).join('') : `<tr><td colspan="8" class="muted">Nessun iscritto con questi filtri.</td></tr>`);
+  }
+  ['#sq', '#se'].forEach(s => $(s).addEventListener('input', drawRegs));
+
+  $('#csv').onclick = () => {
+    const rows = [['codice', 'atleta', 'societa', 'tappa', 'giorno', 'orario', 'categoria', 'quota', 'stato']]
+      .concat(view.map(r => { const e = ev(r.eventId), s = sl(r.slotId); return [r.code, r.athlete, r.society, e.city, s ? s.date : '', s ? s.start : '', s ? cat(s.cat).label : '', r.paid, r.status]; }));
+    const csv = '﻿' + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'iscritti-premium-academy.csv'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    toast(view.length + ' righe esportate');
+  };
+
+  $('#ci').onsubmit = e => {
+    e.preventDefault();
+    const i = $('#cicode'), c = i.value.trim().toUpperCase();
+    const r = regs.find(x => x.code === c);
+    if (!r) { toast('Codice non trovato. Controlla le lettere o cercalo tra gli iscritti', true); i.select(); return; }
+    if (r.checked) { toast('Questo pass è già stato usato alle ' + new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }), true); i.value = ''; return; }
+    r.checked = true;
+    const ok = r.status === 'confermata';
+    $('#log').insertAdjacentHTML('afterbegin', `<li><span><b>${esc(r.athlete)}</b><small>${esc(ev(r.eventId).city)}, ${esc(r.code)}</small></span><span class="badge ${ok ? 'is-open' : 'is-last'}">${ok ? 'Ingresso registrato' : 'Verifica il certificato'}</span></li>`);
+    i.value = ''; drawRegs();
+  };
+
+  $('#newev').onsubmit = e => { e.preventDefault(); const f = new FormData(e.target); toast('Evento di ' + (f.get('city') || '') + ' pubblicato con 7 fasce'); e.target.reset(); };
+  $('#msg').onsubmit = e => { e.preventDefault(); toast('Messaggio messo in coda'); };
+
+  (async function start() {
+    try { await PA.load(); } catch (err) { toast('Non riesco a caricare i dati', true); return; }
+    buildRegs(); paint();
+  })();
 })();
 </script>
 </body>
