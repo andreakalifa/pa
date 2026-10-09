@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Premium Academy · Pannello organizzatori (demo)</title>
+<title>Premium Academy Experience · Pannello organizzatori</title>
 <link rel="icon" href="../assets/img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,800..900&display=swap" rel="stylesheet">
@@ -12,9 +12,9 @@
 :root{--bg:#f3f2f2;--card:#fff;--ink:#1c1819;--g:#242021;--red:#d70e20;--mute:#7a7374;--line:#e6e2e2;--pa-radius:16px;--pa-btn-radius:10px}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 'Archivo',system-ui,sans-serif}
-.shell{display:grid;grid-template-columns:230px 1fr;min-height:100dvh}
-aside{background:var(--g);color:#fff;padding:22px 14px;position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:4px}
-aside img{width:120px;margin:0 8px 24px}
+.shell{display:grid;grid-template-columns:232px 1fr;min-height:100dvh}
+aside{background:var(--g);color:#fff;padding:22px 14px;position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:4px;width:230px}
+aside img{width:176px;margin:4px 8px 26px;display:block}
 aside button{display:block;width:100%;text-align:left;background:none;border:0;color:#bdb6b7;font:600 14px 'Archivo';padding:11px 12px;border-radius:10px;cursor:pointer}
 aside button[aria-current]{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 3px 0 0 var(--red)}
 aside .foot{margin-top:auto;font-size:12px;color:#8f8889;padding:8px}
@@ -65,14 +65,14 @@ td input[type=number]{width:70px;padding:6px 8px;border:1px solid var(--line);bo
 <body>
 <div class="shell">
   <aside>
-    <img src="../assets/img/logo-light.png" alt="Premium Academy">
+    <img src="../assets/img/logo-light.png" alt="Premium Academy Experience">
     <button data-v="dash" aria-current="page">Panoramica</button>
     <button data-v="eventi">Eventi e fasce</button>
     <button data-v="nuovo">Nuovo evento</button>
     <button data-v="iscritti">Iscritti</button>
     <button data-v="checkin">Check-in QR</button>
     <button data-v="comunica">Comunicazioni</button>
-    <div class="foot">Demo senza backend: i dati sono di esempio.<br><a href="../index.html">← Tutte le proposte</a></div>
+    <div class="foot">Demo senza backend: i dati sono di esempio.<br><a href="../index.html">← Torna al sito</a></div>
   </aside>
   <main>
     <section class="view is-on" data-view="dash">

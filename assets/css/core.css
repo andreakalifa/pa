@@ -1,4 +1,4 @@
-/* Componenti condivisi. Ogni proposta ridefinisce le variabili --pa-* */
+/* Componenti condivisi del sito Premium Academy Experience. Lo stile si adatta con le variabili --pa-* */
 :root {
   --pa-red: #d70e20;
   --pa-red-dark: #a50a18;

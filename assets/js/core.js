@@ -1,8 +1,8 @@
 /* =========================================================
    PREMIUM ACADEMY — core condiviso
    Mappa Italia, QR, dettaglio evento, wizard iscrizione,
-   area riservata, toast, countdown. Lo stile dei componenti
-   si adatta a ogni proposta tramite variabili CSS (core.css).
+   area riservata, toast, countdown.
+   Lo stile dei componenti si imposta con le variabili CSS in core.css.
    ========================================================= */
 (function () {
   const D = window.PA_DATA;
@@ -33,14 +33,20 @@
   };
 
   /* ---------- stato registrazioni (localStorage) ---------- */
-  const KEY = 'pa_regs_v1';
+  const KEY = 'pa_regs_v2';
   const store = {
-    all() { try { return JSON.parse(localStorage.getItem(KEY)) || seedRegs(); } catch (e) { return seedRegs(); } },
+    all() {
+      let list; try { list = JSON.parse(localStorage.getItem(KEY)); } catch (e) { }
+      if (!list) list = seedRegs();
+      // scarta iscrizioni che puntano a eventi non più in calendario
+      return list.filter(r => D.events.some(e => e.id === r.eventId));
+    },
     save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { } },
     add(r) { const l = store.all(); l.unshift(r); store.save(l); }
   };
   function seedRegs() {
-    const demo = [{ code: 'PA-7Q2K', eventId: 'pescara-2026', slotIds: ['pescara-2026-s3'], athlete: 'Matteo Lorenzi', email: 'demo@premiumacademy.it', total: 55, status: 'completata', created: '2026-08-30', waitlist: false }];
+    const last = D.events.filter(e => e.endDate < D.TODAY).sort((a, b) => b.startDate - a.startDate)[0] || D.events[0];
+    const demo = [{ code: 'PA-7Q2K', eventId: last.id, slotIds: [last.id + '-s3'], athlete: 'Matteo Lorenzi', email: 'demo@premiumacademy.it', total: 55, status: 'completata', created: last.start, waitlist: false }];
     try { localStorage.setItem(KEY, JSON.stringify(demo)); } catch (e) { }
     return demo;
   }
@@ -182,7 +188,7 @@
                 <small>${left === 0 ? 'Fascia piena' : left + ' posti su ' + s.cap}</small></div>
               <div class="pa-slot-cta"><b>${eur(s.price)}</b>${info.status === 'past' || info.status === 'soon' ? '' : `<button class="pa-btn is-sm ${left === 0 ? 'is-ghost' : ''}" data-reg-slot="${s.id}">${left === 0 ? 'Lista d’attesa' : 'Prenota'}</button>`}</div>
             </li>`; }).join('')}</ul>`).join('')}
-        <div class="pa-note">Ogni fascia: 20′ attivazione a secco, 60′ in acqua, 10′ video feedback a bordo vasca. Da 2 fasce in su −15%.</div>
+        <div class="pa-note">Ogni fascia: 20′ attivazione a secco, 60′ in acqua, 10′ video feedback a bordo vasca. Sconto gruppo del 15% da 2 posti prenotati in su.</div>
       </section>
       <section class="pa-tabpanel" data-panel="coach" hidden>
         <div class="pa-coachgrid">${e.coaches.map(coach).map(c => `<article class="pa-coach">${avatar(c)}<div><h4>${esc(c.name)}</h4><p class="pa-muted">${esc(c.role)}</p><p>${esc(c.bio)}</p></div></article>`).join('')}</div>
@@ -241,7 +247,8 @@
     function totals() {
       const open = selSlots().filter(s => slotLeft(s) > 0);
       const sub = open.reduce((n, s) => n + s.price, 0) * count();
-      const pack = open.filter(s => s.type === 'atleti').length >= 2 ? sub * 0.15 : 0;
+      const posti = open.filter(s => s.type === 'atleti').length * count();
+      const pack = posti >= 2 ? sub * 0.15 : 0;
       const disc = CODES[st.code.toUpperCase()] ? (sub - pack) * CODES[st.code.toUpperCase()] : 0;
       return { sub, pack, disc, total: Math.max(0, sub - pack - disc) };
     }
@@ -254,7 +261,7 @@
         const opts = upcoming().filter(x => !['soon'].includes(eventInfo(x).status));
         body.innerHTML = `<h3 class="pa-h">Scegli tappa e fasce</h3>
           <label class="pa-field"><span>Tappa</span><select data-k="eventId">${opts.map(x => `<option value="${x.id}" ${x.id === st.eventId ? 'selected' : ''}>${esc(x.city)} · ${fmt.range(x)}</option>`).join('')}</select></label>
-          <p class="pa-muted">Puoi selezionare più fasce. Da 2 fasce atleti in su lo sconto pacchetto del 15% è automatico.</p>
+          <p class="pa-muted">Ogni fascia è dedicata a una categoria: scegli quella giusta per l’età dell’atleta. Da 2 posti in su (più atleti, o più fasce) lo sconto gruppo del 15% si applica da solo.</p>
           <div class="pa-pick">${e.slots.map(s => { const left = slotLeft(s), c = cat(s.cat); return `<label class="pa-pick-item ${left === 0 ? 'is-full' : ''}"><input type="checkbox" value="${s.id}" ${st.slots.includes(s.id) ? 'checked' : ''}><span class="pa-pick-box"><b>${fmt.weekday(s.date).slice(0, 3)} ${s.start}–${s.end}</b><strong>${esc(c.label)}</strong><em>${esc(c.ages)}</em><small>${left === 0 ? 'Piena: lista d’attesa' : left + ' posti'} · ${eur(s.price)}</small></span></label>`; }).join('')}</div>`;
         $('[data-k="eventId"]', body).onchange = ev2 => { st.eventId = ev2.target.value; st.slots = []; render(); };
         $$('.pa-pick input', body).forEach(i => i.onchange = () => { st.slots = $$('.pa-pick input:checked', body).map(x => x.value); renderFoot(); });
@@ -298,7 +305,7 @@
             <p><b>${esc(e.city)}</b> · ${fmt.range(e)}</p>
             <ul>${selSlots().map(s => `<li><span>${fmt.weekday(s.date).slice(0, 3)} ${s.start} · ${esc(cat(s.cat).label)}${slotLeft(s) === 0 ? ' (lista d’attesa)' : ''}</span><span>${slotLeft(s) === 0 ? '—' : eur(s.price * count())}</span></li>`).join('')}</ul>
             ${count() > 1 ? `<p class="pa-muted">${count()} atleti</p>` : ''}
-            ${t.pack ? `<p class="pa-row"><span>Sconto pacchetto 15%</span><span>− ${eur(t.pack)}</span></p>` : ''}
+            ${t.pack ? `<p class="pa-row"><span>Sconto gruppo 15%</span><span>− ${eur(t.pack)}</span></p>` : ''}
             ${t.disc ? `<p class="pa-row"><span>Codice ${esc(st.code.toUpperCase())}</span><span>− ${eur(t.disc)}</span></p>` : ''}
             <p class="pa-row pa-total"><span>Totale</span><span>${eur(t.total)}</span></p>
           </div>
@@ -376,7 +383,7 @@
       <nav class="pa-tabs" role="tablist">${[['iscrizioni', 'Iscrizioni'], ['documenti', 'Documenti'], ['media', 'Foto e video']].map(([k, l]) => `<button role="tab" data-tab="${k}" aria-selected="${k === tab}">${l}</button>`).join('')}</nav>
       <section data-panel="iscrizioni">${regs.length ? `<ul class="pa-regs">${regs.map(r => { const e = D.events.find(x => x.id === r.eventId); const p = eventInfo(e).status === 'past'; return `<li class="pa-reg">${qr(r.code, 96)}<div><b>${esc(e.city)}</b> <span class="pa-badge ${p ? 'is-past' : r.waitlist ? 'is-last' : 'is-open'}">${p ? 'Completata' : esc(r.status)}</span><p>${fmt.range(e)} · ${esc(r.athlete)}</p><p class="pa-muted">${r.slotIds.map(id => { const s = e.slots.find(x => x.id === id); return s ? fmt.weekday(s.date).slice(0, 3) + ' ' + s.start + ' ' + cat(s.cat).label : ''; }).join(' · ')} · codice ${r.code}</p></div><div class="pa-reg-cta">${p ? '<button class="pa-btn is-sm" data-cert-dl>Attestato</button>' : '<button class="pa-btn is-sm is-ghost" data-open="' + e.id + '">Programma</button>'}</div></li>`; }).join('')}</ul>` : `<div class="pa-empty"><p>Nessuna iscrizione ancora.</p><button class="pa-btn" data-new>Scegli una tappa</button></div>`}</section>
       <section data-panel="documenti" hidden><ul class="pa-docs">${regs.map(r => `<li><span>Ricevuta ${r.code}</span><button class="pa-link" data-doc>Scarica PDF</button></li><li><span>Certificato medico</span>${r.cert || r.status === 'completata' ? '<span class="pa-ok">Verificato</span>' : '<label class="pa-link">Carica ora<input type="file" hidden data-up></label>'}</li>`).join('')}</ul></section>
-      <section data-panel="media" hidden><p class="pa-muted">Pescara, 12–13 settembre 2026 · 48 foto · 1 video analisi</p><div class="pa-media">${Array.from({ length: 8 }, (_, i) => `<figure>${photo(i * 37, i === 0 ? 'Video analisi: partenza' : '', i % 3)}</figure>`).join('')}</div></section>`, { wide: true, label: 'Area riservata' });
+      <section data-panel="media" hidden><p class="pa-muted">${(() => { const l = past()[0]; return l ? esc(l.city) + ', ' + fmt.range(l) : 'Ultima tappa'; })()} · 48 foto · 1 video analisi</p><div class="pa-media">${Array.from({ length: 8 }, (_, i) => `<figure>${photo(i * 37, i === 0 ? 'Video analisi: partenza' : '', i % 3)}</figure>`).join('')}</div></section>`, { wide: true, label: 'Area riservata' });
     const b = m.body;
     $$('[data-tab]', b).forEach(t => t.addEventListener('click', () => { $$('[data-tab]', b).forEach(x => x.setAttribute('aria-selected', x === t)); $$('[data-panel]', b).forEach(p => p.hidden = p.dataset.panel !== t.dataset.tab); }));
     $(`[data-tab="${tab}"]`, b).click();
