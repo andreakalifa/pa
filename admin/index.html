@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#070d10">
+<meta name="theme-color" content="#ffffff">
+<script>try{if(localStorage.getItem("pa-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <title>Pannello organizzatori · Premium Academy Experience</title>
 <meta name="description" content="Panoramica delle tappe, gestione delle fasce, elenco iscritti, check-in con QR e comunicazioni.">
 <meta name="robots" content="noindex">
@@ -13,28 +14,28 @@
 <style>
 .shell { display: grid; grid-template-columns: 248px 1fr; min-height: 100dvh; }
 .card { min-width: 0; }
-.side { min-width: 0; position: sticky; top: 0; height: 100dvh; padding: 22px 14px; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid var(--line); background: var(--ink-surface); }
+.side { min-width: 0; position: sticky; top: 0; height: 100dvh; padding: 22px 14px; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid var(--line); background: var(--surface); }
 .side img { width: 178px; margin: 2px 8px 26px; }
-.side button { display: block; width: 100%; min-height: 44px; padding: 11px 14px; border: 0; border-radius: var(--r-s); background: none; color: var(--foam-2); font-weight: 600; font-size: 15px; text-align: left; cursor: pointer; }
-.side button:hover { background: var(--ink-raised); color: var(--foam); }
-.side button[aria-current] { background: var(--ink-raised); color: var(--foam); box-shadow: inset 3px 0 0 var(--red); }
-.side .bottom { margin-top: auto; padding: 14px 10px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--foam-3); }
-.side .bottom a { color: var(--foam-2); }
+.side button { display: block; width: 100%; min-height: 44px; padding: 11px 14px; border: 0; border-radius: var(--r-s); background: none; color: var(--text-2); font-weight: 600; font-size: 15px; text-align: left; cursor: pointer; }
+.side button:hover { background: var(--raised); color: var(--text); }
+.side button[aria-current] { background: var(--raised); color: var(--text); box-shadow: inset 3px 0 0 var(--red); }
+.side .bottom { margin-top: auto; padding: 14px 10px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--text-3); }
+.side .bottom a { color: var(--text-2); }
 main { padding: 26px clamp(18px, 3vw, 34px) 60px; min-width: 0; }
 .head { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 22px; }
 .head h1 { margin: 0; font-size: clamp(27px, 3vw, 36px); font-weight: 800; letter-spacing: -.025em; }
-.card { background: var(--ink-surface); border: 1px solid var(--line); border-radius: var(--r-m); padding: 22px; }
-.card h2 { margin: 0 0 16px; font-size: 14px; font-weight: 700; color: var(--foam-2); letter-spacing: .07em; text-transform: uppercase; font-variation-settings: 'wdth' 88; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); padding: 22px; }
+.card h2 { margin: 0 0 16px; font-size: 14px; font-weight: 700; color: var(--text-2); letter-spacing: .07em; text-transform: uppercase; font-variation-settings: 'wdth' 88; }
 .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
 .kpi b { display: block; margin: 6px 0 4px; font: 600 clamp(26px, 2.6vw, 34px)/1 var(--f-mono); font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
-.kpi small { color: var(--foam-2); font-size: 13px; }
+.kpi small { color: var(--text-2); font-size: 13px; }
 .kpi .delta { color: var(--go); font-size: 13px; font-weight: 600; }
 .g2 { display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; margin-bottom: 12px; }
 .bars { display: grid; gap: 11px; }
 .bars div { display: grid; grid-template-columns: 94px 1fr 52px; gap: 12px; align-items: center; font-size: 14px; }
 .bars em { font-style: normal; text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: 13px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); color: var(--foam-2); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; font-variation-settings: 'wdth' 88; }
+th { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); color: var(--text-2); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; font-variation-settings: 'wdth' 88; }
 td { padding: 12px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
 tr:last-child td { border-bottom: 0; }
 td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
@@ -42,20 +43,20 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
 .view { display: none; }
 .view.is-on { display: block; }
 .tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-.tools input, .tools select { min-height: 44px; padding: 11px 14px; background: var(--ink); color: var(--foam); border: 1px solid var(--line-strong); border-radius: var(--r-s); font-size: 15px; }
+.tools input, .tools select { min-height: 44px; padding: 11px 14px; background: var(--bg); color: var(--text); border: 1px solid var(--line-strong); border-radius: var(--r-s); font-size: 15px; }
 .tools input { flex: 1 1 240px; }
 .form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
 .form .span-all { grid-column: 1 / -1; }
 .form textarea { min-height: 96px; resize: vertical; }
 .scan { display: grid; grid-template-columns: 260px 1fr; gap: 26px; align-items: start; }
-.cam { aspect-ratio: 1; border-radius: var(--r-m); background: var(--ink); border: 1px solid var(--line); position: relative; overflow: hidden; display: grid; place-items: center; color: var(--foam-2); font-size: 14px; }
+.cam { aspect-ratio: 1; border-radius: var(--r-m); background: var(--bg); border: 1px solid var(--line); position: relative; overflow: hidden; display: grid; place-items: center; color: var(--text-2); font-size: 14px; }
 .cam::before { content: ''; position: absolute; inset: 17%; border: 2px solid var(--red); border-radius: var(--r-s); }
 .cam::after { content: ''; position: absolute; left: 17%; right: 17%; top: 20%; height: 2px; background: var(--red-bright); animation: scan 2.4s ease-in-out infinite alternate; }
 @keyframes scan { to { top: 80% } }
 .log { list-style: none; margin: 18px 0 0; padding: 0; }
 .log li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
 .log b { display: block; }
-.log small { color: var(--foam-2); }
+.log small { color: var(--text-2); }
 @media (max-width: 1040px) { .kpis { grid-template-columns: 1fr 1fr; } .g2, .scan { grid-template-columns: 1fr; } }
 @media (max-width: 860px) {
   .shell { grid-template-columns: 1fr; }
@@ -73,7 +74,7 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
 <a class="skip" href="#admin-main">Vai al contenuto</a>
 <div class="shell">
   <nav class="side" aria-label="Sezioni del pannello">
-    <img src="../assets/img/logo-light.png" alt="Premium Academy Experience" width="178" height="47">
+    <span class="logo-img" role="img" aria-label="Premium Academy Experience"></span>
     <button data-v="dash" aria-current="page">Panoramica</button>
     <button data-v="fasce">Eventi e fasce</button>
     <button data-v="nuovo">Nuovo evento</button>
@@ -85,7 +86,7 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
 
   <main id="admin-main">
     <section class="view is-on" data-view="dash">
-      <div class="head"><h1>Panoramica</h1><button class="btn sm" data-goto="nuovo">Crea un evento</button></div>
+      <div class="head"><h1>Panoramica</h1><div style="display:flex;gap:8px;align-items:center"><button class="btn ghost sm icon-btn" data-theme-toggle aria-pressed="false" aria-label="Passa al tema scuro" title="Passa al tema scuro"></button><button class="btn sm" data-goto="nuovo">Crea un evento</button></div></div>
       <div class="kpis" id="kpis"></div>
       <div class="g2">
         <div class="card"><h2>Riempimento per tappa</h2><div class="bars" id="bars"></div></div>
@@ -97,7 +98,7 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
     <section class="view" data-view="fasce">
       <div class="head"><h1>Eventi e fasce</h1>
         <label class="sr" for="evsel">Evento</label>
-        <select id="evsel" class="tools" style="min-height:44px;padding:11px 14px;background:var(--ink-surface);color:var(--foam);border:1px solid var(--line-strong);border-radius:var(--r-s)"></select>
+        <select id="evsel" class="tools" style="min-height:44px;padding:11px 14px;background:var(--surface);color:var(--text);border:1px solid var(--line-strong);border-radius:var(--r-s)"></select>
       </div>
       <div class="card"><div class="tw"><table id="slots"></table></div></div>
     </section>
@@ -111,7 +112,7 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
         <label class="field"><span>Vasca</span><select name="pool"><option>Vasca 25 m</option><option>Vasca 50 m</option></select></label>
         <label class="field"><span>Primo giorno</span><input type="date" lang="it" required name="start"></label>
         <label class="field"><span>Apertura iscrizioni</span><input type="date" lang="it" name="opens"></label>
-        <fieldset class="field span-all" style="border:0;padding:0;margin:0 0 16px"><legend style="font-size:13px;font-weight:600;color:var(--foam-2);padding:0 0 7px">Coach presenti</legend>
+        <fieldset class="field span-all" style="border:0;padding:0;margin:0 0 16px"><legend style="font-size:13px;font-weight:600;color:var(--text-2);padding:0 0 7px">Coach presenti</legend>
           <div style="display:flex;gap:16px;flex-wrap:wrap" id="coachchk"></div></fieldset>
         <label class="check span-all"><input type="checkbox" checked name="tpl"> <span>Usa il modello standard: 7 fasce su sabato e domenica</span></label>
         <label class="field span-all"><span>Note per i partecipanti</span><textarea name="note" placeholder="Parcheggio, hotel convenzionati, indicazioni particolari"></textarea></label>
@@ -156,6 +157,7 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
   </main>
 </div>
 
+<script src="../assets/js/theme.js"></script>
 <script src="../assets/js/data.js"></script>
 <script src="../assets/js/api.js"></script>
 <script src="../assets/js/core.js"></script>
@@ -237,7 +239,7 @@ td.num, th.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums;
         <td class="num">${s.start} ${s.end}</td>
         <td>${esc(cat(s.cat).label)}</td>
         <td class="muted">${esc(s.focus)}</td>
-        <td><label class="sr" for="cap-${s.id}">Capienza di ${cat(s.cat).label}</label><input id="cap-${s.id}" type="number" min="1" value="${s.cap}" style="width:76px;min-height:40px;padding:7px 9px;background:var(--ink);color:var(--foam);border:1px solid var(--line-strong);border-radius:var(--r-s)"></td>
+        <td><label class="sr" for="cap-${s.id}">Capienza di ${cat(s.cat).label}</label><input id="cap-${s.id}" type="number" min="1" value="${s.cap}" style="width:76px;min-height:40px;padding:7px 9px;background:var(--bg);color:var(--text);border:1px solid var(--line-strong);border-radius:var(--r-s)"></td>
         <td class="num">${s.cap - slotLeft(s)}</td>
         <td class="num">${eur(s.price)}</td>
         <td><button class="link" data-save>Salva</button></td></tr>`).join('');

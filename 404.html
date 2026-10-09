@@ -3,46 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#070d10">
+<script>
+/* GitHub Pages serve questa pagina per QUALSIASI indirizzo sbagliato, anche
+   profondo. Senza una base, i percorsi relativi si romperebbero e la pagina
+   arriverebbe senza stile. Qui la base si ricava dall'indirizzo: la radice
+   del dominio, oppure la prima cartella se il sito sta in un repository. */
+(function () {
+  var seg = location.pathname.split('/').filter(Boolean);
+  var base = (location.hostname.indexOf('github.io') > -1 && seg.length > 1) ? '/' + seg[0] + '/' : '/';
+  document.write('<base href="' + base + '">');
+})();
+</script>
+<meta name="theme-color" content="#ffffff">
+<script>try{if(localStorage.getItem("pa-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <title>Pagina non trovata · Premium Academy Experience</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="/assets/img/favicon-64.png" sizes="64x64">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/core.css">
+<link rel="icon" href="assets/img/favicon-64.png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/core.css">
 <style>
 body { display: flex; flex-direction: column; min-height: 100dvh; }
 .nf { flex: 1; display: grid; place-items: center; padding: 60px 0; }
 .nf-in { max-width: 56ch; }
 .nf .code { font: 600 clamp(64px, 12vw, 140px)/1 var(--f-mono); letter-spacing: -.06em; color: var(--red-bright); margin: 0 0 6px; }
 .nf h1 { margin: 0 0 14px; }
-.nf p { color: var(--foam-2); font-size: 18px; margin: 0 0 32px; }
+.nf p { color: var(--text-2); font-size: 18px; margin: 0 0 32px; }
 .nf-act { display: flex; gap: 12px; flex-wrap: wrap; }
 .nf-links { margin-top: 44px; padding-top: 26px; border-top: 1px solid var(--line); display: grid; gap: 12px; }
-.nf-links a { color: var(--foam-2); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; min-height: 32px; }
-.nf-links a:hover { color: var(--foam); }
+.nf-links a { color: var(--text-2); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
+.nf-links a:hover { color: var(--text); }
 .nf-bar { border-bottom: 1px solid var(--line); }
-.nf-bar .wrap { display: flex; align-items: center; height: 72px; }
-.nf-bar img { height: 40px; width: auto; }
+.nf-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; }
+.nf-bar .logo-img { --logo-w: 184px; }
 </style>
 </head>
 <body>
-<header class="nf-bar"><div class="wrap"><a href="/" aria-label="Premium Academy Experience, vai alla home"><img src="/assets/img/logo-light.png" alt="Premium Academy Experience" width="190" height="50"></a></div></header>
+<header class="nf-bar"><div class="wrap"><a href="index.html" aria-label="Premium Academy Experience, vai alla home"><span class="logo-img" role="img" aria-label="Premium Academy Experience"></span></a><button class="btn ghost sm icon-btn" data-theme-toggle aria-pressed="false" aria-label="Passa al tema scuro" title="Passa al tema scuro"></button></div></header>
 <main class="nf">
   <div class="wrap nf-in">
     <p class="code">404</p>
     <h1 class="d2">Questa pagina non esiste</h1>
     <p>Forse il link è vecchio, o una tappa è stata spostata. Dal calendario trovi tutte le città della stagione, con i posti ancora liberi in ogni fascia.</p>
     <div class="nf-act">
-      <a class="btn lg" href="/#tappe">Vai al calendario</a>
-      <a class="btn ghost lg" href="/">Torna alla home</a>
+      <a class="btn lg" href="index.html#tappe">Vai al calendario</a>
+      <a class="btn ghost lg" href="index.html">Torna alla home</a>
     </div>
     <nav class="nf-links" aria-label="Collegamenti utili">
-      <a href="/#metodo">Com'è fatta una fascia</a>
-      <a href="/#domande">Domande frequenti</a>
+      <a href="index.html#metodo">Com'è fatta una fascia</a>
+      <a href="index.html#domande">Domande frequenti</a>
       <a href="https://wa.me/393337442984" target="_blank" rel="noopener">Scrivi ad Alessandro su WhatsApp</a>
     </nav>
   </div>
 </main>
+<script src="assets/js/theme.js" defer></script>
 </body>
 </html>

@@ -12,6 +12,31 @@ radice del repository, non la cartella stessa. index.html deve
 stare in radice, altrimenti l'indirizzo diventa /nome-cartella/.
 
 ================================================================
+TEMA CHIARO E SCURO
+================================================================
+Il tema CHIARO è quello predefinito: chi apre il sito la prima
+volta vede il fondo bianco. Il pulsante per cambiare sta nella
+barra in alto su computer, e dentro il menu su telefono, dove
+nella barra non c'era spazio.
+
+La scelta resta salvata sul dispositivo e vale per tutte le
+pagine, pannello organizzatori compreso. Uno script in linea nel
+<head> applica il tema prima che la pagina venga disegnata, così
+non si vede il lampo bianco passando allo scuro.
+
+Il marchio cambia versione da solo: logo-dark.png sul chiaro,
+logo-light.png sullo scuro. Il browser scarica solo quello in uso.
+
+Per far seguire invece l'impostazione del sistema operativo a chi
+non ha ancora scelto, in assets/js/theme.js c'è una sola riga da
+cambiare, segnata con un commento.
+
+I colori stanno tutti in due blocchi in cima a core.css: :root per
+il chiaro e :root[data-theme="dark"] per lo scuro. I nomi dei
+token descrivono il RUOLO, non il colore (--bg, --surface, --text,
+--line), quindi valgono in entrambi i temi.
+
+================================================================
 STRUTTURA
 ================================================================
 index.html            il sito, una sola pagina a scorrimento
@@ -22,6 +47,7 @@ admin/index.html      pannello organizzatori
 
 assets/js/data.js     TUTTI i contenuti: tappe, fasce, prezzi,
                       categorie, coach, FAQ, testimonianze
+assets/js/theme.js    cambio tema chiaro e scuro
 assets/js/api.js      strato dati: l'unico file da cambiare per
                       passare a Django (vedi sotto)
 assets/js/core.js     mappa, scheda tappa, iscrizione, area
@@ -63,6 +89,8 @@ DA PROVARE
 - Link diretto a una tappa: index.html#evento=roma
 - Tutto con la tastiera: Tab, Invio, Esc. Il focus resta dentro la
   modale e torna al punto di partenza quando si chiude.
+- Il cambio tema: contrasti e leggibilità sono stati misurati su
+  entrambi, su tutte le pagine e dentro le finestre.
 
 Le iscrizioni restano nel browser di chi prova (localStorage).
 
